@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joon Park</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2ee;
+    --text: #1a1a18;
+    --muted: #888880;
+    --accent: #2a2a28;
+    --nav-h: 56px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    z-index: 100;
+  }
+
+  .nav-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 32px; }
+
+  .nav-links a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section {
+    padding-top: var(--nav-h);
+    min-height: 100vh;
+  }
+
+  /* ── WORKS PAGE ── */
+  #works { display: block; }
+  #about { display: none; }
+
+  .works-grid {
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 64px 48px;
+  }
+
+  /* ── WORK ITEM ── */
+  .work-item {}
+
+  .slideshow {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #e8e4df;
+    cursor: pointer;
+  }
+
+  .slideshow img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.3s ease-in-out;
+  }
+
+  .slideshow img.active { opacity: 1; }
+
+  .work-caption {
+    margin-top: 14px;
+  }
+
+  .work-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+
+  .work-meta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* ── ABOUT PAGE ── */
+  .about-wrap {
+    padding: 80px 40px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .about-photo {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 48px;
+    filter: grayscale(20%);
+  }
+
+  .about-section { margin-bottom: 48px; }
+
+  .about-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .about-statement {
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--text);
+  }
+
+  .cv-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .cv-year {
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 48px;
+    padding-top: 2px;
+  }
+
+  .about-insta a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+
+  .about-insta a:hover { border-color: var(--text); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(20,20,18,0.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 88vh;
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+
+  .lightbox-close:hover { opacity: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" onclick="showPage('works')">Joon Park</a>
+  <div class="nav-links">
+    <a onclick="showPage('works')" id="nav-works" class="active">Works</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+  </div>
+</nav>
+
+<!-- WORKS -->
+<section id="works">
+  <div class="works-grid" id="worksGrid"></div>
+  <footer>© Joon Park</footer>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-section">
+      <div class="about-label">Statement</div>
+      <p class="about-statement">
+        My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay. The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces. I work at the boundary of ceramics and painting, exploring the moment when vivid experience becomes material.
+      </p>
+    </div>
+
+    <div class="about-section">
+      <div class="about-label">CV</div>
+      <div class="cv-row">
+        <span class="cv-year">2025–</span>
+        <span>Ceramics & Drawing practice, Singapore / Seoul</span>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2016</span>
+        <span>MSc Organizational Psychology, Erasmus University, Netherlands</span>
+      </div>
+      <div class="cv-row">
+        <span class="cv-year">2014</span>
+        <span>BA Psychology, Catholic University of Korea</span>
+      </div>
+    </div>
+
+    <div class="about-section about-insta">
+      <div class="about-label">Contact</div>
+      <a href="https://instagram.com/joonartistic" target="_blank">@joonartistic</a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+// ── WORKS DATA ──
+// Replace the placeholder src values with your actual image filenames.
+// Put all your images in an "images/" folder next to this index.html file.
+// Example: src: 'images/conflict_1.jpg'
+
+const works = [
+  {
+    title: 'Conflict',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      { src: 'images/20250730_104536.jpg', title: 'Conflict' },
+      { src: 'images/20250730_131805.jpg', title: 'Figure I' },
+      { src: 'images/20250730_131704.jpg', title: 'Figure II' },
+      { src: 'images/20250730_131735.jpg', title: 'Figure III' },
+      { src: 'images/20250730_131840.jpg', title: 'Figure IV' },
+      { src: 'images/20250823_121534.jpg', title: '3 Folks' },
+    ]
+  },
+  {
+    title: 'Reflection on the Lake',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      'images/20250823_120948.jpg',
+      'images/20250823_120957.jpg',
+      'images/20250823_121016.jpg',
+      'images/20250823_121024.jpg',
+      'images/20250823_121039.jpg',
+      'images/20250829_165545.jpg'
+    ]
+  },
+  {
+    title: 'Whale + Swan',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      'images/20250823_122007.jpg',
+      'images/20250823_121952.jpg',
+      'images/20250823_121934.jpg',
+      'images/20250823_121923.jpg'
+    ]
+  },
+  {
+    title: 'After Dentist Office Visit',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      'images/20250802_213004.jpg',
+      'images/20250802_213027.jpg',
+      'images/20250802_213058.jpg'
+    ]
+  },
+  {
+    title: 'Flow',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      'images/20250823_122202.jpg',
+      'images/20250804_135532.jpg'
+    ]
+  },
+  {
+    title: 'Forest Light',
+    meta: 'Hand-built ceramic, 2025',
+    images: [
+      'images/20250804_135548.jpg',
+      'images/20250823_122216.jpg',
+      'images/20250823_122002.jpg'
+    ]
+  },
+  {
+    title: 'Spring',
+    meta: 'Hand-built ceramic, 2025',
+    images: ['images/20250823_120614.jpg']
+  },
+  {
+    title: 'The Plate for Well-fermented Cheese',
+    meta: 'Hand-built ceramic, 2025',
+    images: ['images/20250827_124948.jpg']
+  },
+  {
+    title: "Don't Forget to Make My Head",
+    meta: 'Hand-built ceramic, 2026',
+    images: [
+      'images/20260408_095028.jpg',
+      'images/20260408_094952.jpg',
+      'images/20260408_095017.jpg'
+    ]
+  },
+  {
+    title: 'Dancing Singapore',
+    meta: 'Pen Drawing, 2026',
+    images: ['images/20260427_102753.jpg']
+  },
+  {
+    title: 'Treetopus',
+    meta: 'Pen Drawing, 2026',
+    images: ['images/20260424_102711.jpg']
+  },
+  {
+    title: 'My Neighbor in Singapore',
+    meta: 'Pen Drawing, 2026',
+    images: ['images/20260427_175358.jpg']
+  },
+  {
+    title: 'Who Owns Gardens of the Bay?',
+    meta: 'Pen Drawing, 2026',
+    images: ['images/20250713_182901.jpg']
+  },
+  {
+    title: 'Vein',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20250109_162132.jpg']
+  },
+  {
+    title: 'Happiness',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260409_224715.jpg']
+  },
+  {
+    title: 'Conceptual Ceramic Vase',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260427_105654.jpg']
+  },
+  {
+    title: 'Path',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260330_191608.jpg']
+  },
+  {
+    title: 'Dental Care with a Bird',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260427_180704.jpg']
+  },
+  {
+    title: 'Wuthering Heights',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260403_161413.jpg']
+  },
+  {
+    title: 'Millions of Ways',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260404_164621.jpg']
+  },
+];
+
+// ── BUILD GRID ──
+const grid = document.getElementById('worksGrid');
+
+works.forEach((work) => {
+  // Normalise: images can be strings or {src, title} objects
+  const slides = work.images.map(img =>
+    typeof img === 'string' ? { src: img, title: work.title } : img
+  );
+
+  const item = document.createElement('div');
+  item.className = 'work-item';
+
+  const ss = document.createElement('div');
+  ss.className = 'slideshow';
+
+  slides.forEach((slide, i) => {
+    const img = document.createElement('img');
+    img.src = slide.src;
+    img.alt = slide.title;
+    if (i === 0) img.classList.add('active');
+    img.onclick = () => openLightbox(slide.src);
+    ss.appendChild(img);
+  });
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'work-title';
+  titleEl.textContent = `<${slides[0].title}>`;
+
+  const metaEl = document.createElement('div');
+  metaEl.className = 'work-meta';
+  metaEl.textContent = work.meta;
+
+  const cap = document.createElement('div');
+  cap.className = 'work-caption';
+  cap.appendChild(titleEl);
+  cap.appendChild(metaEl);
+
+  item.appendChild(ss);
+  item.appendChild(cap);
+  grid.appendChild(item);
+
+  // Auto-advance slideshow
+  if (slides.length > 1) {
+    const delay = slides.length <= 3 ? 5000 : 3900;
+    let current = 0;
+    setInterval(() => {
+      const imgs = ss.querySelectorAll('img');
+      imgs[current].classList.remove('active');
+      current = (current + 1) % imgs.length;
+      imgs[current].classList.add('active');
+      // Update caption title
+      titleEl.textContent = `<${slides[current].title}>`;
+    }, delay);
+  }
+});
+
+// ── NAV ──
+function showPage(page) {
+  document.getElementById('works').style.display = page === 'works' ? 'block' : 'none';
+  document.getElementById('about').style.display = page === 'about' ? 'block' : 'none';
+  document.getElementById('nav-works').classList.toggle('active', page === 'works');
+  document.getElementById('nav-about').classList.toggle('active', page === 'about');
+}
+
+// ── LIGHTBOX ──
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>
