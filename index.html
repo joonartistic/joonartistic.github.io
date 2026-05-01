@@ -26,7 +26,6 @@
     line-height: 1.6;
   }
 
-  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
     height: var(--nav-h);
@@ -43,7 +42,6 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--text);
-    text-decoration: none;
     cursor: pointer;
   }
 
@@ -62,51 +60,53 @@
 
   .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
-  /* ── PAGES ── */
   #works { display: block; }
   #about { display: none; }
 
-  /* ── WORKS: one per row ── */
-  .works-list {
-    padding-top: var(--nav-h);
-  }
+  .works-list { padding-top: var(--nav-h); }
 
   .work-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 60px;
+    padding: 72px 60px;
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
 
   .slideshow {
     position: relative;
     width: 100%;
-    max-width: 860px;
+    max-width: 800px;
     cursor: zoom-in;
-    overflow: hidden;
   }
 
-  .slideshow img {
+  /* First image: natural size, max 80vh */
+  .slideshow img:first-child {
     display: block;
     width: 100%;
     height: auto;
+    max-height: 80vh;
+    object-fit: contain;
     opacity: 0;
     transition: opacity 1.3s ease-in-out;
   }
 
+  /* Other images: absolute, same box */
   .slideshow img:not(:first-child) {
     position: absolute;
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: #fff;
+    opacity: 0;
+    transition: opacity 1.3s ease-in-out;
   }
 
   .slideshow img.active { opacity: 1; }
 
   .work-caption {
-    margin-top: 20px;
+    margin-top: 18px;
     text-align: center;
   }
 
@@ -124,7 +124,6 @@
     margin-top: 4px;
   }
 
-  /* ── ABOUT ── */
   .about-wrap {
     padding: calc(var(--nav-h) + 80px) 60px 80px;
     max-width: 680px;
@@ -175,7 +174,6 @@
 
   .about-insta a:hover { border-color: var(--text); }
 
-  /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed; inset: 0;
@@ -267,6 +265,7 @@
 
 <script>
 const works = [
+  // ── Ceramics ──
   {
     title: 'Conflict',
     meta: 'Hand-built ceramic, 2025',
@@ -314,20 +313,19 @@ const works = [
     meta: 'Hand-built ceramic, 2025',
     images: [
       'images/20250804_135548.jpg',
-      'images/20250823_122216.jpg',
-      'images/20250823_122002.jpg'
+      'images/20250804_135532.jpg'
     ]
   },
   {
     title: 'Flow',
     meta: 'Hand-built ceramic, 2025',
     images: [
-      'images/20250823_122202.jpg',
-      'images/20250804_135532.jpg'
+      'images/20250823_122216.jpg',
+      'images/20250823_122202.jpg'
     ]
   },
   {
-    title: 'Whale + Swan',
+    title: 'Swan married Whale',
     meta: 'Hand-built ceramic, 2025',
     images: [
       'images/20250823_122007.jpg',
@@ -346,38 +344,49 @@ const works = [
     meta: 'Hand-built ceramic, 2025',
     images: ['images/20250827_124948.jpg']
   },
+  // ── Drawings ──
   {
     title: 'Dancing Singapore',
     meta: 'Pen Drawing, 2026',
     images: ['images/20260427_102753.jpg']
   },
   {
-    title: 'Treetopus',
+    title: 'Who Owns Gardens of the Bay?',
     meta: 'Pen Drawing, 2026',
     images: ['images/20260424_102711.jpg']
   },
   {
-    title: 'My Neighbor in Singapore',
+    title: 'Treetopus',
     meta: 'Pen Drawing, 2026',
     images: ['images/20260427_175358.jpg']
   },
   {
-    title: 'Who Owns Gardens of the Bay?',
+    title: 'My Neighbor in Singapore',
     meta: 'Pen Drawing, 2026',
+    images: ['images/20260427_180704.jpg']
+  },
+  {
+    title: 'Dental Care with a Bird',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20250109_162132.jpg']
+  },
+  {
+    title: 'Conceptual Ceramic Vase',
+    meta: 'Pen Drawing, 2025',
+    images: ['images/20260409_224715.jpg']
+  },
+  {
+    title: 'Happiness',
+    meta: 'Pen Drawing, 2025',
     images: ['images/20250713_182901.jpg']
   },
   {
     title: 'Vein',
     meta: 'Pen Drawing, 2025',
-    images: ['images/20250109_162132.jpg']
+    images: ['images/20250420_174459.jpg']
   },
   {
-    title: 'Happiness',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20260409_224715.jpg']
-  },
-  {
-    title: 'Conceptual Ceramic Vase',
+    title: 'Path',
     meta: 'Pen Drawing, 2025',
     images: ['images/20260427_105654.jpg']
   },
@@ -385,16 +394,6 @@ const works = [
     title: 'Wuthering Heights',
     meta: 'Pen Drawing, 2025',
     images: ['images/20260330_191608.jpg']
-  },
-  {
-    title: 'Dental Care with a Bird',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20260427_180704.jpg']
-  },
-  {
-    title: 'Path',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20260403_161413.JPG']
   },
   {
     title: 'Millions of Ways',
@@ -427,7 +426,7 @@ works.forEach((work) => {
 
   const titleEl = document.createElement('div');
   titleEl.className = 'work-title';
-  titleEl.textContent = `<${slides[0].title}>`;
+  titleEl.textContent = '<' + slides[0].title + '>';
 
   const metaEl = document.createElement('div');
   metaEl.className = 'work-meta';
@@ -450,7 +449,7 @@ works.forEach((work) => {
       imgs[current].classList.remove('active');
       current = (current + 1) % imgs.length;
       imgs[current].classList.add('active');
-      titleEl.textContent = `<${slides[current].title}>`;
+      titleEl.textContent = '<' + slides[current].title + '>';
     }, delay);
   }
 });
