@@ -225,7 +225,7 @@
     { kind:'ceramic', title:'After Dentist Office Visit', meta:'Hand-built ceramic', year:2025,
       frames:['images/20250802_213004.jpg','images/20250802_213027.jpg','images/20250802_213058.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'Reflection on the Lake', meta:'Hand-built ceramic', year:2025,
-      frames:['images/20250823_120948.jpg','images/20250823_120957.jpg','images/20250823_121016.jpg','images/20250823_121024.jpg','images/20250823_121039.jpg','images/20250829_165545.jpg'].map(s=>({src:s}))},
+      frames:['images/20250823_120957.jpg','images/20250823_121024.jpg','images/20250823_121039.jpg','images/20250823_120948.jpg','images/20250823_121016.jpg','images/20250829_165545.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'Forest Light', meta:'Hand-built ceramic', year:2025,
       frames:['images/20250804_135548.jpg','images/20250804_135532.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'Flow', meta:'Hand-built ceramic', year:2025,
@@ -348,9 +348,8 @@
         <div className="label-wrap">
           <div className="label-title">{work.title}</div>
           <div className="label">
-            <div className="acc">Acc. JP · {acc}</div>
             <div className="yr">{work.year}</div>
-            <div className="med">{work.meta}<br/>Virtual Studio of the artist</div>
+            <div className="med">{work.meta}</div>
           </div>
         </div>
       </div>
@@ -387,7 +386,6 @@
         <div className="draw-frame"><img src={work.frames[0].src} alt={work.title} /></div>
         <div className="draw-ttl">{work.title}</div>
         <div className="draw-cap">
-          <div className="acc">Acc. JP · {acc}</div>
           <div className="meta">{work.meta} · {work.year}</div>
         </div>
       </div>
