@@ -117,6 +117,7 @@
   .plate-img { max-width: 600px; max-height: 70vh; object-fit: contain; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.55); display: block; }
   .plate.feature .plate-img { max-width: 760px; max-height: 78vh; }
   .plate.small .plate-img { max-width: 460px; max-height: 56vh; }
+  .plate.xsmall .plate-img { max-width: 380px; max-height: 50vh; }
 
   .thumbs { display: flex; flex-direction: column; gap: 6px; padding-top: 0; align-self: flex-start; }
   .thumb { width: 44px; height: 44px; background: var(--soft); border: 1px solid var(--rule); cursor: pointer; overflow: hidden; transition: border-color 0.15s; padding: 0; }
@@ -211,7 +212,7 @@
   const { useState, useEffect } = React;
 
   const WORKS = [
-    { kind:'ceramic', title:'Conflict', meta:'Hand-built ceramic', year:2025, isSeries:true,
+    { kind:'ceramic', title:'Conflict', meta:'Hand-built ceramic', year:2025,
       frames:[
         {label:'Conflict', src:'images/20250730_104536.jpg'},
         {label:'Figure I', src:'images/20250730_131805.jpg'},
@@ -278,14 +279,12 @@
   }
 
   function WorksPage({ceramics, drawings}) {
-    const series = ceramics.filter(w => w.isSeries);
-    const singles = ceramics.filter(w => !w.isSeries);
-    const sizes = ['feature','normal','normal','feature','normal','small','normal','normal','feature','normal'];
+    const sizes = ['feature','xsmall','normal','normal','feature','normal','small','normal','normal','feature','normal'];
     return (
       <>
         <header className="hero">
           <div className="institution">Joon Park · Portfolio</div>
-          <h1>At the boundary of<br/><em>ceramics &amp; painting</em>
+          <h1>At the boundary of<br/><em>clay &amp; ink</em>
             <small>Selected works, 2025 / 2026 · Singapore, Seoul</small>
           </h1>
 
@@ -298,8 +297,7 @@
           </div>
         </div>
         <div className="rule" />
-        {series.map(w => <SeriesBlock key={w.title} work={w} acc="01" />)}
-        {singles.map((w, i) => <Plate key={w.title} work={w} acc={String(i+2).padStart(2,'0')} size={sizes[i]||'normal'} />)}
+        {ceramics.map((w, i) => <Plate key={w.title} work={w} size={sizes[i]||'normal'} />)}
         <blockquote className="pullquote">
           “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
           <span className="att">Statement, 2026</span>
