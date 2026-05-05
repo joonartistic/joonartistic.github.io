@@ -96,12 +96,24 @@
   .pullquote .att { display: block; margin-top: 32px; font-family: var(--mono); font-style: normal; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
 
   .plate { max-width: 1400px; margin: 100px auto; padding: 0 56px; }
+  .plate-img-wrap { position: relative; display: inline-block; }
+  .plate-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.35); color: #fff; border: none; cursor: pointer;
+    font-size: 20px; padding: 10px 14px; opacity: 0; transition: opacity 0.2s;
+    line-height: 1;
+  }
+  .plate-img-wrap:hover .plate-arrow { opacity: 1; }
+  .plate-arrow-l { left: 0; }
+  .plate-arrow-r { right: 0; }
+  .plate-counter {
+    position: absolute; bottom: 10px; right: 12px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.8); background: rgba(0,0,0,0.4); padding: 3px 7px;
+  }
   .plate.feature { margin: 140px auto; }
   /* image + thumbs in a row, thumbs flush to right edge of image */
-  .plate-frame {
-    display: inline-flex; align-items: flex-start; gap: 12px;
-    justify-content: center; width: 100%; padding: 16px 0;
-  }
+  .plate-frame { display: flex; justify-content: center; padding: 16px 0; }
   .plate-img { max-width: 600px; max-height: 70vh; object-fit: contain; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.55); display: block; }
   .plate.feature .plate-img { max-width: 760px; max-height: 78vh; }
   .plate.small .plate-img { max-width: 460px; max-height: 56vh; }
@@ -209,7 +221,7 @@
         {label:'3 Folks', src:'images/20250823_121534.jpg'},
       ]},
     { kind:'ceramic', title:"Don't Forget to Make My Head", meta:'Hand-built ceramic', year:2026,
-      frames:['images/20260408_095028.jpg','images/20260408_094952.jpg','images/20260408_095017.jpg'].map(s=>({src:s}))},
+      frames:['images/20260408_094952.jpg','images/20260408_095028.jpg','images/20260408_095017.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'After Dentist Office Visit', meta:'Hand-built ceramic', year:2025,
       frames:['images/20250802_213004.jpg','images/20250802_213027.jpg','images/20250802_213058.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'Reflection on the Lake', meta:'Hand-built ceramic', year:2025,
@@ -316,22 +328,22 @@
   function Plate({work, acc, size}) {
     const [active, setActive] = useState(0);
     const hasMulti = work.frames.length > 1;
+    const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
+    const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
     return (
       <div className={`plate ${size}`}>
         <div className="plate-frame">
-          <img className="plate-img" src={work.frames[active].src} alt={work.title}
-            onClick={() => openLightbox(work, active)} style={{cursor: 'zoom-in'}} />
-          {hasMulti && (
-            <div className="thumbs">
-              <div className="thumb-count">{work.frames.length}v</div>
-              {work.frames.map((f, i) => (
-                <button key={i} className={`thumb ${i === active ? 'on' : ''}`}
-                  onMouseEnter={() => setActive(i)} onClick={() => setActive(i)}>
-                  <img src={f.src} alt="" />
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="plate-img-wrap">
+            <img className="plate-img" src={work.frames[active].src} alt={work.title}
+              onClick={() => openLightbox(work, active)} style={{cursor: 'zoom-in'}} />
+            {hasMulti && (
+              <>
+                <button className="plate-arrow plate-arrow-l" onClick={prev}>&#8592;</button>
+                <button className="plate-arrow plate-arrow-r" onClick={next}>&#8594;</button>
+                <div className="plate-counter">{active + 1} / {work.frames.length}</div>
+              </>
+            )}
+          </div>
         </div>
         <div className="label-wrap">
           <div className="label-title">{work.title}</div>
@@ -352,7 +364,7 @@
         <div className="series-head">
           <div className="acc">Acc. JP · {acc} <b>{work.title}</b></div>
           <div>
-            <div className="ttl">A series of {n} hand-built figures</div>
+            <div className="ttl">Five figures · {n} views</div>
             <div className="meta">{work.meta} · {work.year}</div>
             <p className="desc">Sibling figures explored as one work. Each piece holds the same hand, the same hour. Read across, not in sequence.</p>
           </div>
