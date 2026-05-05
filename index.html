@@ -6,498 +6,414 @@
 <title>Joon Park</title>
 <link rel="icon" type="image/png" href="favicon-32x32.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  body, body * { letter-spacing: -0.005em; }
+  a { color: inherit; }
 
   :root {
-    --bg: #ffffff;
-    --text: #1a1a18;
-    --muted: #999992;
-    --nav-h: 56px;
+    --bg: #0e0e0c;
+    --ink: #f4f1ea;
+    --muted: #8a857a;
+    --rule: #2a2925;
+    --soft: #1a1a17;
+    --accent: oklch(72% 0.14 80);
+    --serif: 'Newsreader', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: 17px;
-    line-height: 1.6;
+  body.theme-light {
+    --bg: #ecebe6;
+    --ink: #1c1c1a;
+    --muted: #6f6c63;
+    --rule: #c4c1ba;
+    --soft: #d8d5cd;
+    --accent: #8a4f2a;
   }
+  .hero h1 em, .about h2 em { color: var(--accent); }
+  body:not(.theme-light) .hero .institution,
+  body:not(.theme-light) .hero h1 small,
+  body:not(.theme-light).lede-accent .room-head p,
+  body:not(.theme-light).lede-accent .pullquote .att,
+  body:not(.theme-light).lede-accent .series-head .desc { color: var(--accent); }
+  body:not(.theme-light) .pullquote::before { background: var(--accent); }
+  body:not(.theme-light) .thumb.on, body:not(.theme-light) .thumb:hover { border-color: var(--accent); }
+  body:not(.theme-light) .nav-links button.on { color: var(--accent); border-color: var(--accent); }
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    height: var(--nav-h);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 40px;
-    background: var(--bg);
-    border-bottom: 1px solid rgba(0,0,0,0.07);
-    z-index: 100;
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    padding: 24px 56px; background: var(--bg); align-items: baseline;
+    border-bottom: 1px solid transparent; transition: border-color 0.2s;
   }
-
-  .nav-name {
-    font-family: 'EB Garamond', serif;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--text);
-    cursor: pointer;
+  nav.top.scrolled { border-color: var(--rule); }
+  .mark { font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
+  .mark span { color: var(--muted); font-weight: 400; }
+  .nav-center { text-align: center; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .nav-links { display: flex; gap: 28px; justify-content: flex-end; }
+  .nav-links button {
+    background: none; border: 0; cursor: pointer; padding: 4px 0; font: inherit;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid transparent;
   }
+  .nav-links button.on { color: var(--ink); border-color: var(--ink); }
 
-  .nav-links { display: flex; gap: 32px; }
-
-  .nav-links a {
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-    cursor: pointer;
+  .hero { padding: 180px 56px 140px; max-width: 1100px; margin: 0 auto; text-align: center; }
+  .hero .institution { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); margin-bottom: 56px; }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400; font-style: italic;
+    font-size: clamp(54px, 8.4vw, 116px); line-height: 1.02; letter-spacing: -0.025em;
+    margin-bottom: 56px;
   }
-
-  .nav-links a:hover, .nav-links a.active { color: var(--text); }
-
-  #works { display: block; }
-  #about { display: none; }
-
-  .works-list { padding-top: var(--nav-h); }
-
-  .work-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 72px 60px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+  .hero h1 small {
+    display: block; font-style: normal; font-family: var(--serif);
+    font-size: 0.32em; letter-spacing: 0.02em; color: var(--muted); margin-top: 36px; font-weight: 400;
   }
+  .hero .dates { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; padding-top: 24px; border-top: 1px solid var(--ink); display: inline-block; min-width: 320px; }
 
-  .slideshow {
-    position: relative;
-    width: 100%;
-    max-width: 640px;
-    cursor: zoom-in;
+  .room-head { padding: 140px 56px 64px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 220px 1fr; gap: 80px; align-items: end; }
+  .room-head .roman { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .room-head .roman b { display: block; font-family: var(--serif); font-size: 80px; letter-spacing: -0.03em; color: var(--ink); margin-top: 12px; font-weight: 400; line-height: 1; }
+  .room-head h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(40px, 5.6vw, 76px); line-height: 1; letter-spacing: -0.02em; }
+  .room-head p { margin-top: 28px; max-width: 560px; font-size: 15px; line-height: 1.65; color: var(--muted); }
+
+  .rule { height: 1px; background: var(--ink); max-width: 1400px; margin: 0 auto; }
+
+  .pullquote {
+    max-width: 900px; margin: 140px auto 80px; padding: 0 56px;
+    font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3.4vw, 40px); line-height: 1.3; letter-spacing: -0.012em; text-align: center;
   }
+  .pullquote::before { content: ''; display: block; width: 56px; height: 1px; background: var(--accent); margin: 0 auto 36px; }
+  .pullquote .att { display: block; margin-top: 32px; font-family: var(--mono); font-style: normal; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
 
-  /* First image: natural size, max 80vh */
-  .slideshow img:first-child {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 64vh;
-    object-fit: contain;
-    opacity: 0;
-    transition: opacity 1.3s ease-in-out;
-  }
+  .plate { max-width: 1400px; margin: 100px auto; padding: 0 56px; }
+  .plate.feature { margin: 140px auto; }
+  .plate-frame { display: flex; align-items: center; justify-content: center; padding: 40px 0 32px; position: relative; }
+  .plate-frame .vrule { position: absolute; left: 50%; transform: translateX(-50%); width: 1px; background: var(--rule); }
+  .plate-frame .vrule.t { top: 0; height: 32px; }
+  .plate-frame .vrule.b { bottom: 0; height: 32px; }
+  .plate-img { max-width: 600px; max-height: 70vh; object-fit: contain; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.55); }
+  .plate.feature .plate-img { max-width: 760px; max-height: 78vh; }
+  .plate.small .plate-img { max-width: 460px; max-height: 56vh; }
 
-  /* Other images: absolute, same box */
-  .slideshow img:not(:first-child) {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #fff;
-    opacity: 0;
-    transition: opacity 1.3s ease-in-out;
-  }
+  .label { margin: 24px auto 0; max-width: 540px; padding: 22px 0 0; border-top: 1px solid var(--ink); display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+  .label .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .label .ttl { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 4px; }
+  .label .yr { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .label .med { font-size: 11px; color: var(--muted); line-height: 1.55; font-family: var(--mono); letter-spacing: 0.04em; }
 
-  .slideshow img.active { opacity: 1; }
+  .thumbs { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+  .thumb { width: 44px; height: 44px; background: var(--soft); border: 1px solid var(--rule); cursor: pointer; overflow: hidden; transition: border-color 0.15s; padding: 0; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb.on { border-color: var(--ink); }
 
-  .work-caption {
-    margin-top: 18px;
-    text-align: center;
-  }
+  .series { max-width: 1400px; margin: 140px auto; padding: 0 56px; }
+  .series-head { display: grid; grid-template-columns: 220px 1fr; gap: 80px; align-items: end; margin-bottom: 48px; }
+  .series-head .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  .series-head .acc b { display: block; font-family: var(--serif); font-size: 36px; font-weight: 400; font-style: italic; letter-spacing: -0.01em; color: var(--ink); margin-top: 8px; }
+  .series-head .ttl { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.05; margin-bottom: 8px; }
+  .series-head .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+  .series-head .desc { margin-top: 16px; max-width: 520px; font-size: 14px; line-height: 1.6; color: var(--muted); }
+  .series-strip { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 28px; align-items: end; padding-top: 32px; border-top: 1px solid var(--rule); }
+  .series-fig { display: flex; flex-direction: column; gap: 14px; cursor: zoom-in; }
+  .series-fig img { width: 100%; aspect-ratio: 4/5; object-fit: cover; background: var(--soft); box-shadow: 0 16px 32px -16px rgba(0,0,0,0.5); }
+  .series-fig .cap { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); text-align: center; }
+  .series-fig .cap b { display: block; font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 4px; font-weight: 400; }
 
-  .work-title {
-    font-family: 'Courier Prime', monospace;
-    font-size: 13px;
-    letter-spacing: 0.05em;
-    color: var(--text);
-  }
+  .draw-grid { max-width: 1400px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 100px 60px; }
+  .draw-item { display: flex; flex-direction: column; gap: 18px; cursor: zoom-in; }
+  .draw-frame { width: 100%; aspect-ratio: 4/5; background: var(--soft); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5); overflow: hidden; }
+  .draw-frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .draw-cap { padding-top: 14px; border-top: 1px solid var(--rule); }
+  .draw-cap .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--muted); margin-bottom: 6px; }
+  .draw-cap .ttl { font-family: var(--serif); font-style: italic; font-size: 17px; margin-bottom: 4px; }
+  .draw-cap .meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
 
-  .work-meta {
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+  .colophon { margin-top: 200px; padding: 80px 56px; border-top: 1px solid var(--ink); max-width: 1400px; margin-left: auto; margin-right: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); }
+  .colophon h4 { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; font-weight: 500; }
+  .colophon a { text-decoration: underline; text-underline-offset: 3px; }
 
-  .about-wrap {
-    padding: calc(var(--nav-h) + 80px) 60px 80px;
-    max-width: 680px;
-    margin: 0 auto;
-  }
+  .about { max-width: 760px; margin: 0 auto; padding: 160px 56px 200px; }
+  .about .head { font-family: var(--mono); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted); margin-bottom: 36px; }
+  .about h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(40px, 6vw, 76px); line-height: 1.02; letter-spacing: -0.025em; margin: 0 0 60px; }
+  .about p { font-size: 19px; line-height: 1.75; margin-bottom: 22px; }
+  .about-block { margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--ink); }
+  .about-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .cv-row { display: grid; grid-template-columns: 100px 1fr; gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--soft); font-size: 15px; }
+  .cv-row .y { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 1px; }
 
-  .about-section { margin-bottom: 52px; }
-
-  .about-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 18px;
-  }
-
-  .about-statement {
-    font-size: 19px;
-    line-height: 1.8;
-    color: var(--text);
-  }
-
-  .cv-row {
-    display: flex;
-    gap: 28px;
-    margin-bottom: 12px;
-    font-size: 16px;
-  }
-
-  .cv-year {
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    min-width: 44px;
-    padding-top: 3px;
-  }
-
-  .about-insta a {
-    font-family: 'Courier Prime', monospace;
-    font-size: 14px;
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid var(--muted);
-    padding-bottom: 1px;
-    transition: border-color 0.2s;
-  }
-
-  .about-insta a:hover { border-color: var(--text); }
-
-  .lightbox {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(10,10,10,0.93);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-  }
-
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 200; align-items: center; justify-content: center; cursor: zoom-out; }
   .lightbox.open { display: flex; }
-
-  .lightbox img {
-    max-width: 92vw;
-    max-height: 90vh;
-    object-fit: contain;
-  }
-
-  .lightbox-close {
-    position: absolute; top: 24px; right: 32px;
-    font-family: 'Courier Prime', monospace;
-    font-size: 22px;
-    color: #fff;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-  }
-
+  .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 28px; right: 36px; font-family: var(--mono); font-size: 20px; color: #fff; cursor: pointer; opacity: 0.6; }
   .lightbox-close:hover { opacity: 1; }
+  .lightbox-meta { position: absolute; bottom: 28px; left: 36px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: rgba(255,255,255,0.7); }
 
-  footer {
-    text-align: center;
-    padding: 48px;
-    font-family: 'Courier Prime', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
+  @media (max-width: 800px) {
+    nav.top { grid-template-columns: 1fr auto; padding: 18px 24px; gap: 16px; }
+    .nav-center { display: none; }
+    .hero { padding: 100px 24px 80px; }
+    .hero h1 { font-size: clamp(40px, 12vw, 64px); }
+    .room-head, .series-head { grid-template-columns: 1fr; gap: 16px; padding-left: 24px; padding-right: 24px; }
+    .room-head .roman b { font-size: 56px; }
+    .plate { padding: 0 24px; margin: 64px auto; }
+    .plate.feature { margin: 80px auto; }
+    .plate-img { max-width: 100% !important; max-height: 60vh; }
+    .label { grid-template-columns: 1fr; max-width: 100%; }
+    .thumbs { flex-direction: row; }
+    .series { padding: 0 24px; margin: 80px auto; }
+    .series-strip { grid-template-columns: repeat(2, 1fr); }
+    .draw-grid { grid-template-columns: 1fr 1fr; padding: 0 24px; gap: 56px 24px; }
+    .colophon { grid-template-columns: 1fr 1fr; padding: 56px 24px; gap: 28px; }
+    .about { padding: 100px 24px 120px; }
+    .pullquote { padding: 0 24px; margin: 80px auto 56px; }
   }
 </style>
 </head>
 <body>
-
-<nav>
-  <span class="nav-name" onclick="showPage('works')">Joon Park</span>
-  <div class="nav-links">
-    <a onclick="showPage('works')" id="nav-works" class="active">Works</a>
-    <a onclick="showPage('about')" id="nav-about">About</a>
-  </div>
-</nav>
-
-<section id="works">
-  <div class="works-list" id="worksList"></div>
-  <footer>© Joon Park</footer>
-</section>
-
-<section id="about">
-  <div class="about-wrap">
-    <div class="about-section">
-      <div class="about-label">Statement</div>
-      <p class="about-statement">
-        My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay. The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces. I work at the boundary of ceramics and painting, exploring the moment when vivid experience becomes material.
-      </p>
-    </div>
-    <div class="about-section">
-      <div class="about-label">CV</div>
-      <div class="cv-row">
-        <span class="cv-year">2025–</span>
-        <span>Ceramics & Drawing practice, Singapore / Seoul</span>
-      </div>
-      <div class="cv-row">
-        <span class="cv-year">2016</span>
-        <span>MSc Organizational Psychology, Erasmus University, Netherlands</span>
-      </div>
-      <div class="cv-row">
-        <span class="cv-year">2014</span>
-        <span>BA Psychology, Catholic University of Korea</span>
-      </div>
-    </div>
-    <div class="about-section about-insta">
-      <div class="about-label">Contact</div>
-      <a href="https://instagram.com/joonartistic" target="_blank">@joonartistic</a>
-    </div>
-  </div>
-</section>
-
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<div id="root"></div>
+<div class="lightbox" id="lightbox">
   <span class="lightbox-close">✕</span>
   <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-meta" id="lightboxMeta"></div>
 </div>
 
-<script>
-const works = [
-  // ── Ceramics ──
-  {
-    title: 'Conflict',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      { src: 'images/20250730_104536.jpg', title: 'Conflict' },
-      { src: 'images/20250730_131805.jpg', title: 'Figure I' },
-      { src: 'images/20250730_131704.jpg', title: 'Figure II' },
-      { src: 'images/20250730_131735.jpg', title: 'Figure III' },
-      { src: 'images/20250730_131840.jpg', title: 'Figure IV' },
-      { src: 'images/20250823_121534.jpg', title: '3 Folks' },
-    ]
-  },
-  {
-    title: "Don't Forget to Make My Head",
-    meta: 'Hand-built ceramic, 2026',
-    images: [
-      'images/20260408_095028.jpg',
-      'images/20260408_094952.jpg',
-      'images/20260408_095017.jpg'
-    ]
-  },
-  {
-    title: 'After Dentist Office Visit',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      'images/20250802_213004.jpg',
-      'images/20250802_213027.jpg',
-      'images/20250802_213058.jpg'
-    ]
-  },
-  {
-    title: 'Reflection on the Lake',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      'images/20250823_120948.jpg',
-      'images/20250823_120957.jpg',
-      'images/20250823_121016.jpg',
-      'images/20250823_121024.jpg',
-      'images/20250823_121039.jpg',
-      'images/20250829_165545.jpg'
-    ]
-  },
-  {
-    title: 'Forest Light',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      'images/20250804_135548.jpg',
-      'images/20250804_135532.jpg'
-    ]
-  },
-  {
-    title: 'Flow',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      'images/20250823_122216.jpg',
-      'images/20250823_122202.jpg'
-    ]
-  },
-  {
-    title: 'Swan married Whale',
-    meta: 'Hand-built ceramic, 2025',
-    images: [
-      'images/20250823_122007.jpg',
-      'images/20250823_121952.jpg',
-      'images/20250823_121934.jpg',
-      'images/20250823_121923.jpg'
-    ]
-  },
-  {
-    title: 'Spring',
-    meta: 'Hand-built ceramic, 2025',
-    images: ['images/20250823_120614.jpg']
-  },
-  {
-    title: 'The Plate for Well-fermented Cheese',
-    meta: 'Hand-built ceramic, 2025',
-    images: ['images/20250827_124948.jpg']
-  },
-  {
-    title: 'Wiggle Wiggle I',
-    meta: 'Hand-built ceramic, 2026',
-    images: [
-      'images/20260502_144151.jpg',
-      'images/20260502_122110.jpg',
-      'images/20260502_095132.jpg',
-      'images/20260502_095143.jpg'
-    ]
-  },
-  {
-    title: 'Wiggle Wiggle II',
-    meta: 'Hand-built ceramic, 2026',
-    images: [
-      'images/20260502_095114.jpg',
-      'images/20260502_095123.jpg',
-      'images/20260502_095150.jpg'
-    ]
-  },
-  // ── Drawings ──
-  {
-    title: 'Dancing Singapore',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260427_102753.jpg']
-  },
-  {
-    title: 'Who Owns Gardens of the Bay?',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260424_102711.jpg']
-  },
-  {
-    title: 'Treetopus',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260427_175358.jpg']
-  },
-  {
-    title: 'My Neighbor in Singapore',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260427_180704.jpg']
-  },
-  {
-    title: 'Dental Care with a Bird',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20250109_162132.jpg']
-  },
-  {
-    title: 'Conceptual Ceramic Vase',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20260409_224715.jpg']
-  },
-  {
-    title: 'Happiness',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20250713_182901.jpg']
-  },
-  {
-    title: 'Vein',
-    meta: 'Pen Drawing, 2025',
-    images: ['images/20250420_174459.jpg']
-  },
-  {
-    title: 'Path',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260427_105654.jpg']
-  },
-  {
-    title: 'Wuthering Heights',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260330_191608.jpg']
-  },
-  {
-    title: 'Traffic Accidents',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260503_144341.jpg']
-  },
-  {
-    title: 'Millions of Ways',
-    meta: 'Pen Drawing, 2026',
-    images: ['images/20260404_164621.jpg']
-  },
-];
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-const list = document.getElementById('worksList');
+<script type="text/babel" data-presets="react">
+  const { useState, useEffect } = React;
 
-works.forEach((work) => {
-  const slides = work.images.map(img =>
-    typeof img === 'string' ? { src: img, title: work.title } : img
-  );
+  const WORKS = [
+    { kind:'ceramic', title:'Conflict', meta:'Hand-built ceramic', year:2025, isSeries:true,
+      frames:[
+        {label:'Conflict', src:'images/20250730_104536.jpg'},
+        {label:'Figure I', src:'images/20250730_131805.jpg'},
+        {label:'Figure II', src:'images/20250730_131704.jpg'},
+        {label:'Figure III', src:'images/20250730_131735.jpg'},
+        {label:'Figure IV', src:'images/20250730_131840.jpg'},
+        {label:'3 Folks', src:'images/20250823_121534.jpg'},
+      ]},
+    { kind:'ceramic', title:"Don't Forget to Make My Head", meta:'Hand-built ceramic', year:2026,
+      frames:['images/20260408_095028.jpg','images/20260408_094952.jpg','images/20260408_095017.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'After Dentist Office Visit', meta:'Hand-built ceramic', year:2025,
+      frames:['images/20250802_213004.jpg','images/20250802_213027.jpg','images/20250802_213058.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Reflection on the Lake', meta:'Hand-built ceramic', year:2025,
+      frames:['images/20250823_120948.jpg','images/20250823_120957.jpg','images/20250823_121016.jpg','images/20250823_121024.jpg','images/20250823_121039.jpg','images/20250829_165545.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Forest Light', meta:'Hand-built ceramic', year:2025,
+      frames:['images/20250804_135548.jpg','images/20250804_135532.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Flow', meta:'Hand-built ceramic', year:2025,
+      frames:['images/20250823_122216.jpg','images/20250823_122202.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Swan married Whale', meta:'Hand-built ceramic', year:2025,
+      frames:['images/20250823_122007.jpg','images/20250823_121952.jpg','images/20250823_121934.jpg','images/20250823_121923.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Spring', meta:'Hand-built ceramic', year:2025, frames:[{src:'images/20250823_120614.jpg'}]},
+    { kind:'ceramic', title:'The Plate for Well-fermented Cheese', meta:'Hand-built ceramic', year:2025, frames:[{src:'images/20250827_124948.jpg'}]},
+    { kind:'ceramic', title:'Wiggle Wiggle I', meta:'Hand-built ceramic', year:2026,
+      frames:['images/20260502_144151.jpg','images/20260502_122110.jpg','images/20260502_095132.jpg','images/20260502_095143.jpg'].map(s=>({src:s}))},
+    { kind:'ceramic', title:'Wiggle Wiggle II', meta:'Hand-built ceramic', year:2026,
+      frames:['images/20260502_095114.jpg','images/20260502_095123.jpg','images/20260502_095150.jpg'].map(s=>({src:s}))},
+    { kind:'drawing', title:'Dancing Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_102753.jpg'}]},
+    { kind:'drawing', title:'Who Owns Gardens of the Bay?', meta:'Pen drawing', year:2026, frames:[{src:'images/20260424_102711.jpg'}]},
+    { kind:'drawing', title:'Treetopus', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_175358.jpg'}]},
+    { kind:'drawing', title:'My Neighbor in Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_180704.jpg'}]},
+    { kind:'drawing', title:'Dental Care with a Bird', meta:'Pen drawing', year:2025, frames:[{src:'images/20250109_162132.jpg'}]},
+    { kind:'drawing', title:'Conceptual Ceramic Vase', meta:'Pen drawing', year:2025, frames:[{src:'images/20260409_224715.jpg'}]},
+    { kind:'drawing', title:'Happiness', meta:'Pen drawing', year:2025, frames:[{src:'images/20250713_182901.jpg'}]},
+    { kind:'drawing', title:'Vein', meta:'Pen drawing', year:2025, frames:[{src:'images/20250420_174459.jpg'}]},
+    { kind:'drawing', title:'Path', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_105654.jpg'}]},
+    { kind:'drawing', title:'Wuthering Heights', meta:'Pen drawing', year:2026, frames:[{src:'images/20260330_191608.jpg'}]},
+    { kind:'drawing', title:'Traffic Accidents', meta:'Pen drawing', year:2026, frames:[{src:'images/20260503_144341.jpg'}]},
+    { kind:'drawing', title:'Millions of Ways', meta:'Pen drawing', year:2026, frames:[{src:'images/20260404_164621.jpg'}]},
+  ];
 
-  const item = document.createElement('div');
-  item.className = 'work-item';
+  function App() {
+    const [page, setPage] = useState('works');
+    const [scrolled, setScrolled] = useState(false);
+    useEffect(() => {
+      const onScroll = () => setScrolled(window.scrollY > 8);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+    const ceramics = WORKS.filter(w => w.kind === 'ceramic');
+    const drawings = WORKS.filter(w => w.kind === 'drawing');
+    return (
+      <>
+        <nav className={`top ${scrolled ? 'scrolled' : ''}`}>
+          <div className="mark">Joon Park <span>· Studio</span></div>
+          <div className="nav-center">Selected Works · Vol. I</div>
+          <div className="nav-links">
+            <button className={page === 'works' ? 'on' : ''} onClick={() => setPage('works')}>Works</button>
+            <button className={page === 'about' ? 'on' : ''} onClick={() => setPage('about')}>About</button>
+          </div>
+        </nav>
+        {page === 'works' ? <WorksPage ceramics={ceramics} drawings={drawings} /> : <AboutPage />}
+      </>
+    );
+  }
 
-  const ss = document.createElement('div');
-  ss.className = 'slideshow';
+  function WorksPage({ceramics, drawings}) {
+    const series = ceramics.filter(w => w.isSeries);
+    const singles = ceramics.filter(w => !w.isSeries);
+    const sizes = ['feature','normal','normal','feature','normal','small','normal','normal','feature','normal'];
+    return (
+      <>
+        <header className="hero">
+          <div className="institution">Joon Park · Portfolio</div>
+          <h1>At the boundary of<br/><em>ceramics &amp; painting</em>
+            <small>Selected works, 2025 / 2026 · Singapore, Seoul</small>
+          </h1>
+          <div className="dates">23 works · 2 rooms</div>
+        </header>
+        <div className="room-head">
+          <div className="roman">Room <b>I</b></div>
+          <div>
+            <h2>Ceramics</h2>
+            <p>Hand-built pieces in which form arrives slowly through the hand. Eleven works tracing the textures of memory: light through a forest, the discomfort of a dental chair, a swan married to a whale.</p>
+          </div>
+        </div>
+        <div className="rule" />
+        {series.map(w => <SeriesBlock key={w.title} work={w} acc="01" />)}
+        {singles.map((w, i) => <Plate key={w.title} work={w} acc={String(i+2).padStart(2,'0')} size={sizes[i]||'normal'} />)}
+        <blockquote className="pullquote">
+          “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
+          <span className="att">Statement, 2026</span>
+        </blockquote>
+        <div className="room-head">
+          <div className="roman">Room <b>II</b></div>
+          <div>
+            <h2>Drawings</h2>
+            <p>Pen on paper. A diary of looking: Singapore neighbours, bodies of water, a treetopus. Twelve works in ink.</p>
+          </div>
+        </div>
+        <div className="rule" />
+        <div className="draw-grid" style={{paddingTop: 80}}>
+          {drawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+12).padStart(2,'0')} />)}
+        </div>
+        <footer className="colophon">
+          <div><h4>Studio</h4>Singapore / Seoul<br/>By appointment</div>
+          <div><h4>Contact</h4><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer">@joonartistic</a></div>
+          <div><h4>Catalogue</h4>Vol. I · 2025/2026<br/>23 works</div>
+          <div><h4>©</h4>Joon Park, 2026<br/>All rights reserved</div>
+        </footer>
+      </>
+    );
+  }
 
-  slides.forEach((slide, i) => {
-    const img = document.createElement('img');
-    img.src = slide.src;
-    img.alt = slide.title;
-    if (i === 0) img.classList.add('active');
-    img.onclick = () => openLightbox(slide.src);
-    ss.appendChild(img);
+  function Plate({work, acc, size}) {
+    const [active, setActive] = useState(0);
+    const hasMulti = work.frames.length > 1;
+    return (
+      <div className={`plate ${size}`}>
+        <div className="plate-frame">
+          <span className="vrule t" />
+          <img className="plate-img" src={work.frames[active].src} alt={work.title}
+            onClick={() => openLightbox(work, active)} style={{cursor: 'zoom-in'}} />
+          <span className="vrule b" />
+        </div>
+        <div className="label">
+          <div>
+            <div className="acc">Acc. JP · {acc}</div>
+            <div className="ttl">{work.title}</div>
+            <div className="yr">{work.year}</div>
+            <div className="med">{work.meta}<br/>Studio of the artist{hasMulti ? ` · ${work.frames.length} views` : ''}</div>
+          </div>
+          {hasMulti && (
+            <div className="thumbs">
+              {work.frames.map((f, i) => (
+                <button key={i} className={`thumb ${i === active ? 'on' : ''}`}
+                  onMouseEnter={() => setActive(i)} onClick={() => setActive(i)}>
+                  <img src={f.src} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  function SeriesBlock({work, acc}) {
+    const n = work.frames.length;
+    return (
+      <div className="series">
+        <div className="series-head">
+          <div className="acc">Acc. JP · {acc} <b>{work.title}</b></div>
+          <div>
+            <div className="ttl">A series of {n} hand-built figures</div>
+            <div className="meta">{work.meta} · {work.year}</div>
+            <p className="desc">Sibling figures explored as one work. Each piece holds the same hand, the same hour. Read across, not in sequence.</p>
+          </div>
+        </div>
+        <div className="series-strip" style={{['--n']: Math.min(n, 6)}}>
+          {work.frames.map((f, i) => (
+            <figure className="series-fig" key={i} onClick={() => openLightbox(work, i)}>
+              <img src={f.src} alt={f.label || work.title} />
+              <figcaption className="cap">Fig. {String(i+1).padStart(2,'0')}<b>{f.label || work.title}</b></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  function DrawItem({work, acc}) {
+    return (
+      <div className="draw-item" onClick={() => openLightbox(work, 0)}>
+        <div className="draw-frame"><img src={work.frames[0].src} alt={work.title} /></div>
+        <div className="draw-cap">
+          <div className="acc">Acc. JP · {acc}</div>
+          <div className="ttl">{work.title}</div>
+          <div className="meta">{work.meta} · {work.year}</div>
+        </div>
+      </div>
+    );
+  }
+
+  function AboutPage() {
+    return (
+      <div className="about">
+        <div className="head">Statement</div>
+        <h2>at the <em>boundary</em> of clay &amp; ink.</h2>
+        <p>My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay.</p>
+        <p>The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces. I work at the boundary of ceramics and painting, exploring the moment when vivid experience becomes material.</p>
+        <div className="about-block">
+          <div className="about-label">Curriculum Vitae</div>
+          <div className="cv-row"><span className="y">2025–</span><span>Ceramics &amp; Drawing practice, Singapore / Seoul</span></div>
+          <div className="cv-row"><span className="y">2016</span><span>MSc Organizational Psychology, Erasmus University, Netherlands</span></div>
+          <div className="cv-row"><span className="y">2014</span><span>BA Psychology, Catholic University of Korea</span></div>
+        </div>
+        <div className="about-block">
+          <div className="about-label">Contact</div>
+          <p style={{fontSize:17}}><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer" style={{textDecoration:'underline', textDecorationColor:'var(--accent)', textUnderlineOffset:4}}>@joonartistic</a></p>
+        </div>
+      </div>
+    );
+  }
+
+  window.openLightbox = function(work, idx) {
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = work.frames[idx].src;
+    document.getElementById('lightboxMeta').textContent = `${work.title} · ${work.meta} · ${work.year}`;
+    lb.classList.add('open');
+  };
+  document.getElementById('lightbox').addEventListener('click', () => {
+    document.getElementById('lightbox').classList.remove('open');
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
   });
 
-  const titleEl = document.createElement('div');
-  titleEl.className = 'work-title';
-  titleEl.textContent = '<' + slides[0].title + '>';
-
-  const metaEl = document.createElement('div');
-  metaEl.className = 'work-meta';
-  metaEl.textContent = work.meta;
-
-  const cap = document.createElement('div');
-  cap.className = 'work-caption';
-  cap.appendChild(titleEl);
-  cap.appendChild(metaEl);
-
-  item.appendChild(ss);
-  item.appendChild(cap);
-  list.appendChild(item);
-
-  if (slides.length > 1) {
-    const delay = slides.length <= 3 ? 6300 : 5200;
-    let current = 0;
-    setInterval(() => {
-      const imgs = ss.querySelectorAll('img');
-      imgs[current].classList.remove('active');
-      current = (current + 1) % imgs.length;
-      imgs[current].classList.add('active');
-      titleEl.textContent = '<' + slides[current].title + '>';
-    }, delay);
-  }
-});
-
-function showPage(page) {
-  document.getElementById('works').style.display = page === 'works' ? 'block' : 'none';
-  document.getElementById('about').style.display = page === 'about' ? 'block' : 'none';
-  document.getElementById('nav-works').classList.toggle('active', page === 'works');
-  document.getElementById('nav-about').classList.toggle('active', page === 'about');
-}
-
-function openLightbox(src) {
-  document.getElementById('lightboxImg').src = src;
-  document.getElementById('lightbox').classList.add('open');
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeLightbox();
-});
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
