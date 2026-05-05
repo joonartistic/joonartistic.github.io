@@ -97,26 +97,27 @@
 
   .plate { max-width: 1400px; margin: 100px auto; padding: 0 56px; }
   .plate.feature { margin: 140px auto; }
-  .plate-frame { display: flex; align-items: center; justify-content: center; padding: 40px 0 32px; position: relative; }
-  .plate-frame .vrule { position: absolute; left: 50%; transform: translateX(-50%); width: 1px; background: var(--rule); }
-  .plate-frame .vrule.t { top: 0; height: 32px; }
-  .plate-frame .vrule.b { bottom: 0; height: 32px; }
-  .plate-img { max-width: 600px; max-height: 70vh; object-fit: contain; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.55); }
+  /* image + thumbs in a row, thumbs flush to right edge of image */
+  .plate-frame {
+    display: inline-flex; align-items: flex-start; gap: 12px;
+    justify-content: center; width: 100%; padding: 16px 0;
+  }
+  .plate-img { max-width: 600px; max-height: 70vh; object-fit: contain; box-shadow: 0 30px 60px -22px rgba(0,0,0,0.55); display: block; }
   .plate.feature .plate-img { max-width: 760px; max-height: 78vh; }
   .plate.small .plate-img { max-width: 460px; max-height: 56vh; }
 
-  .label-wrap { margin: 16px auto 0; max-width: 540px; }
-  .label-title { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 14px; }
-  .label { padding: 16px 0 0; border-top: 1px solid var(--ink); display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
-  .label .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  .label .yr { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-  .label .med { font-size: 11px; color: var(--muted); line-height: 1.55; font-family: var(--mono); letter-spacing: 0.04em; }
-  .thumb-count { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); text-align: center; margin-bottom: 6px; }
-
-  .thumbs { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+  .thumbs { display: flex; flex-direction: column; gap: 6px; padding-top: 0; align-self: flex-start; }
   .thumb { width: 44px; height: 44px; background: var(--soft); border: 1px solid var(--rule); cursor: pointer; overflow: hidden; transition: border-color 0.15s; padding: 0; }
   .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .thumb.on { border-color: var(--ink); }
+  .thumb-count { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); text-align: center; margin-bottom: 6px; }
+
+  .label-wrap { margin: 16px auto 0; max-width: 600px; }
+  .label-title { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 14px; }
+  .label { padding: 16px 0 0; border-top: 1px solid var(--ink); }
+  .label .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .label .yr { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .label .med { font-size: 11px; color: var(--muted); line-height: 1.55; font-family: var(--mono); letter-spacing: 0.04em; }
 
   .series { max-width: 1400px; margin: 140px auto; padding: 0 56px; }
   .series-head { display: grid; grid-template-columns: 220px 1fr; gap: 80px; align-items: end; margin-bottom: 48px; }
@@ -135,6 +136,7 @@
   .draw-item { display: flex; flex-direction: column; gap: 18px; cursor: zoom-in; }
   .draw-frame { width: 100%; aspect-ratio: 4/5; background: var(--soft); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5); overflow: hidden; }
   .draw-frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .draw-ttl { font-family: var(--serif); font-style: italic; font-size: 17px; margin-bottom: 10px; }
   .draw-cap { padding-top: 14px; border-top: 1px solid var(--rule); }
   .draw-cap .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--muted); margin-bottom: 6px; }
   .draw-cap .ttl { font-family: var(--serif); font-style: italic; font-size: 17px; margin-bottom: 4px; }
@@ -274,7 +276,7 @@
           <h1>At the boundary of<br/><em>ceramics &amp; painting</em>
             <small>Selected works, 2025 / 2026 · Singapore, Seoul</small>
           </h1>
-          <div className="dates">23 works · 2 rooms</div>
+
         </header>
         <div className="room-head">
           <div className="roman">Room <b>I</b></div>
@@ -317,30 +319,26 @@
     return (
       <div className={`plate ${size}`}>
         <div className="plate-frame">
-          <span className="vrule t" />
           <img className="plate-img" src={work.frames[active].src} alt={work.title}
             onClick={() => openLightbox(work, active)} style={{cursor: 'zoom-in'}} />
-          <span className="vrule b" />
+          {hasMulti && (
+            <div className="thumbs">
+              <div className="thumb-count">{work.frames.length}v</div>
+              {work.frames.map((f, i) => (
+                <button key={i} className={`thumb ${i === active ? 'on' : ''}`}
+                  onMouseEnter={() => setActive(i)} onClick={() => setActive(i)}>
+                  <img src={f.src} alt="" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="label-wrap">
           <div className="label-title">{work.title}</div>
           <div className="label">
-            <div>
-              <div className="acc">Acc. JP · {acc}</div>
-              <div className="yr">{work.year}</div>
-              <div className="med">{work.meta}<br/>Virtual Studio of the artist</div>
-            </div>
-            {hasMulti && (
-              <div className="thumbs">
-                <div className="thumb-count">{work.frames.length} views</div>
-                {work.frames.map((f, i) => (
-                  <button key={i} className={`thumb ${i === active ? 'on' : ''}`}
-                    onMouseEnter={() => setActive(i)} onClick={() => setActive(i)}>
-                    <img src={f.src} alt="" />
-                  </button>
-                ))}
-              </div>
-            )}
+            <div className="acc">Acc. JP · {acc}</div>
+            <div className="yr">{work.year}</div>
+            <div className="med">{work.meta}<br/>Virtual Studio of the artist</div>
           </div>
         </div>
       </div>
@@ -375,9 +373,9 @@
     return (
       <div className="draw-item" onClick={() => openLightbox(work, 0)}>
         <div className="draw-frame"><img src={work.frames[0].src} alt={work.title} /></div>
+        <div className="draw-ttl">{work.title}</div>
         <div className="draw-cap">
           <div className="acc">Acc. JP · {acc}</div>
-          <div className="ttl">{work.title}</div>
           <div className="meta">{work.meta} · {work.year}</div>
         </div>
       </div>
