@@ -126,6 +126,7 @@
   .thumb-count { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); text-align: center; margin-bottom: 6px; }
 
   .label-wrap { margin: 16px auto 0; max-width: 600px; }
+  .label-note { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--muted); margin-bottom: 14px; }
   .label-title { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 14px; }
   .label { padding: 16px 0 0; border-top: 1px solid var(--ink); }
   .label .acc { font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
@@ -212,7 +213,10 @@
   const { useState, useEffect } = React;
 
   const WORKS = [
-    { kind:'ceramic', title:'Conflict', meta:'Hand-built ceramic', year:2025,
+    { kind:'ceramic', title:'Garden, After Dark', meta:'Hand-built ceramic', year:2026,
+    note:'A late night in a New York garden, a conversation that went on too long.',
+    frames:['images/20260506_093049.jpg','images/20260506_093100.jpg','images/20260506_093111.jpg','images/20260506_093130.jpg','images/20260506_093152.jpg'].map(s=>({src:s}))},
+  { kind:'ceramic', title:'Conflict', meta:'Hand-built ceramic', year:2025,
       frames:[
         {label:'Conflict', src:'images/20250730_104536.jpg'},
         {label:'Figure I', src:'images/20250730_131805.jpg'},
@@ -239,7 +243,9 @@
       frames:['images/20260502_144151.jpg','images/20260502_122110.jpg','images/20260502_095132.jpg','images/20260502_095143.jpg'].map(s=>({src:s}))},
     { kind:'ceramic', title:'Wiggle Wiggle II', meta:'Hand-built ceramic', year:2026,
       frames:['images/20260502_095114.jpg','images/20260502_095123.jpg','images/20260502_095150.jpg'].map(s=>({src:s}))},
-    { kind:'drawing', title:'Dancing Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_102753.jpg'}]},
+    { kind:'ceramic', title:'Pearl House', meta:'Hand-built ceramic', year:2026,
+    frames:['images/20260505_211916.jpg','images/20260505_211840.jpg','images/20260505_212005.jpg'].map(s=>({src:s}))},
+  { kind:'drawing', title:'Dancing Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_102753.jpg'}]},
     { kind:'drawing', title:'Who Owns Gardens of the Bay?', meta:'Pen drawing', year:2026, frames:[{src:'images/20260424_102711.jpg'}]},
     { kind:'drawing', title:'Treetopus', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_175358.jpg'}]},
     { kind:'drawing', title:'My Neighbor in Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_180704.jpg'}]},
@@ -345,6 +351,7 @@
         </div>
         <div className="label-wrap">
           <div className="label-title">{work.title}</div>
+          {work.note && <div className="label-note">{work.note}</div>}
           <div className="label">
             <div className="yr">{work.year}</div>
             <div className="med">{work.meta}</div>
