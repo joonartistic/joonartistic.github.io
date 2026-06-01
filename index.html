@@ -350,17 +350,11 @@
     const hasMulti = work.frames.length > 1;
     const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
     const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
-    const getFrame = (i) => {
-      const f = work.frames[i];
-      return typeof f === 'string' ? {src: f, label: null} : f;
-    };
-    const currentFrame = getFrame(active);
-    const currentLabel = currentFrame.label || work.title;
     return (
       <div className={`plate ${size}`}>
         <div className="plate-frame">
           <div className="plate-img-wrap">
-            <img className="plate-img" src={currentFrame.src} alt={work.title}
+            <img className="plate-img" src={work.frames[active].src} alt={work.title}
               onClick={() => openLightbox(work, active)} style={{cursor: 'zoom-in'}} />
             {hasMulti && (
               <>
@@ -372,7 +366,7 @@
           </div>
         </div>
         <div className="label-wrap">
-          <div className="label-title">{currentLabel}</div>
+          <div className="label-title">{work.title}</div>
           {work.note && <div className="label-note">{work.note}</div>}
           <div className="label">
             <div className="yr">{work.year}</div>
@@ -410,7 +404,7 @@
   function DrawItem({work, acc}) {
     return (
       <div className="draw-item" onClick={() => openLightbox(work, 0)}>
-        <div className="draw-frame"><img src={typeof work.frames[0] === 'string' ? work.frames[0] : work.frames[0].src} alt={work.title} /></div>
+        <div className="draw-frame"><img src={work.frames[0].src} alt={work.title} /></div>
         <div className="draw-ttl">{work.title}</div>
         <div className="draw-cap">
           <div className="meta">{work.meta} · {work.year}</div>
@@ -442,7 +436,7 @@
 
   window.openLightbox = function(work, idx) {
     const lb = document.getElementById('lightbox');
-    document.getElementById('lightboxImg').src = (typeof work.frames[idx] === 'string' ? work.frames[idx] : work.frames[idx].src);
+    document.getElementById('lightboxImg').src = work.frames[idx].src;
     document.getElementById('lightboxMeta').textContent = `${work.title} · ${work.meta} · ${work.year}`;
     lb.classList.add('open');
   };
