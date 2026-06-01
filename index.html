@@ -350,6 +350,7 @@
     const hasMulti = work.frames.length > 1;
     const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
     const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
+    const currentLabel = (work.frames[active] && work.frames[active].label) ? work.frames[active].label : work.title;
     return (
       <div className={`plate ${size}`}>
         <div className="plate-frame">
@@ -366,7 +367,7 @@
           </div>
         </div>
         <div className="label-wrap">
-          <div className="label-title">{work.title}</div>
+          <div className="label-title">{currentLabel}</div>
           {work.note && <div className="label-note">{work.note}</div>}
           <div className="label">
             <div className="yr">{work.year}</div>
