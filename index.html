@@ -356,10 +356,10 @@
           </div>
         </div>
         <div className="rule" />
+        {LARGE_DRAWINGS.map((w) => <Plate key={w.title} work={w} size="feature" />)}
         <div className="draw-grid" style={{paddingTop: 80}}>
           {drawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+12).padStart(2,'0')} />)}
         </div>
-        {LARGE_DRAWINGS.map((w) => <Plate key={w.title} work={w} size="feature" />)}
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
           <div><h4>Contact</h4><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer">@joonartistic</a></div>
