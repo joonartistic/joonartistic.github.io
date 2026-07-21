@@ -267,6 +267,12 @@
       frames:[{src:'images/20260502_095114.jpg'},{src:'images/20260502_095123.jpg'},{src:'images/20260502_095150.jpg'}]},
     { kind:'ceramic', title:'Pearl House', meta:'Hand-built ceramic', year:2026,
     frames:[{src:'images/20260505_211916.jpg'},{src:'images/20260505_211840.jpg'},{src:'images/20260505_212005.jpg'}]},
+    { kind:'ceramic', title:'Minotaur, In Need of Retirement', meta:'Hand-built ceramic, unfired', year:2026,
+    frames:[{src:'images/Minotaur, In need of retirement.jpg'},{src:'images/Minotaur, In need of retirement 2.jpg'},{src:'images/Minotaur, In need of retirement 3.jpg'}]},
+    { kind:'ceramic', title:'Huh?', meta:'Hand-built ceramic, unfired', year:2026,
+    frames:[{src:'images/Huh.jpg'}]},
+    { kind:'ceramic', title:'Frankenstein', meta:'Hand-built ceramic, unfired', year:2026,
+    frames:[{src:'images/Frankenstein.jpg'},{src:'images/Frankenstein 2.jpg'}]},
   { kind:'drawing', title:'Dancing Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_102753.jpg'}]},
     { kind:'drawing', title:'Uncontained', meta:'Pen drawing', year:2026, frames:[{src:'images/IMG_20260521_173019_546.jpg'}]},
     { kind:'drawing', title:'Who Owns Gardens of the Bay?', meta:'Pen drawing', year:2026, frames:[{src:'images/20260424_102711.jpg'}]},
@@ -283,6 +289,14 @@
     { kind:'drawing', title:'Fishermen', meta:'Pen drawing', year:2026, frames:[{src:'images/20260518_134417.jpg'}]},
     { kind:'drawing', title:'Pose', meta:'Pen drawing', year:2026, frames:[{src:'images/20260602_142844.jpg'}]},
     { kind:'drawing', title:'Bull Trap', meta:'Pen drawing', year:2026, frames:[{src:'images/bull trap.jpg'}]},
+  ];
+
+  const LARGE_DRAWINGS = [
+    { title:'Stained Scoliosis', meta:'Pen drawing', year:2026, frames:[{src:'images/Stained Scoliosis.jpg'}]},
+    { title:'Stained Anatomy', meta:'Pen drawing', year:2026, frames:[{src:'images/Stained Anatomy.jpg'}]},
+    { title:'Crossing the Line to Supermarket', meta:'Pen drawing', year:2026, frames:[{src:'images/Cross the line to supermarket.jpg'}]},
+    { title:'2126', meta:'Pen drawing', year:2026, frames:[{src:'images/2126.jpg'}]},
+    { title:'Trembling', meta:'Pen drawing', year:2026, frames:[{src:'images/Trembling.jpg'}]},
   ];
 
   function App() {
@@ -345,6 +359,7 @@
         <div className="draw-grid" style={{paddingTop: 80}}>
           {drawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+12).padStart(2,'0')} />)}
         </div>
+        {LARGE_DRAWINGS.map((w) => <Plate key={w.title} work={w} size="feature" />)}
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
           <div><h4>Contact</h4><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer">@joonartistic</a></div>
