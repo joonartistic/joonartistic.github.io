@@ -104,6 +104,8 @@
     line-height: 1;
   }
   .plate-img-wrap:hover .plate-arrow { opacity: 1; }
+  .draw-frame .plate-arrow { opacity: 0.55; padding: 6px 10px; font-size: 15px; }
+  .draw-frame:hover .plate-arrow { opacity: 1; }
   .plate-arrow-l { left: 0; }
   .plate-arrow-r { right: 0; }
   .plate-counter {
@@ -148,7 +150,7 @@
 
   .draw-grid { max-width: 1400px; margin: 0 auto; padding: 0 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 100px 60px; }
   .draw-item { display: flex; flex-direction: column; gap: 18px; cursor: zoom-in; }
-  .draw-frame { width: 100%; aspect-ratio: 4/5; background: var(--soft); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5); overflow: hidden; }
+  .draw-frame { position: relative; width: 100%; aspect-ratio: 4/5; background: var(--soft); display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5); overflow: hidden; }
   .draw-frame img { width: 100%; height: 100%; object-fit: contain; display: block; }
   .draw-ttl { font-family: var(--serif); font-style: italic; font-size: 17px; margin-bottom: 10px; }
   .draw-cap { padding-top: 14px; border-top: 1px solid var(--rule); }
@@ -174,6 +176,15 @@
   .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
   .lightbox-close { position: absolute; top: 28px; right: 36px; font-family: var(--mono); font-size: 20px; color: #fff; cursor: pointer; opacity: 0.6; }
   .lightbox-close:hover { opacity: 1; }
+  .lightbox-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.08); color: #fff; border: none; cursor: pointer;
+    font-size: 26px; padding: 16px 18px; opacity: 0.6; transition: opacity 0.2s;
+    line-height: 1; z-index: 5;
+  }
+  .lightbox-arrow:hover { opacity: 1; }
+  .lightbox-arrow-l { left: 18px; }
+  .lightbox-arrow-r { right: 18px; }
   .lightbox-meta { position: absolute; bottom: 28px; left: 36px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: rgba(255,255,255,0.7); }
 
   @media (max-width: 800px) {
@@ -201,7 +212,9 @@
 <div id="root"></div>
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close">✕</span>
+  <button class="lightbox-arrow lightbox-arrow-l" id="lightboxPrev">&#8592;</button>
   <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-arrow lightbox-arrow-r" id="lightboxNext">&#8594;</button>
   <div class="lightbox-meta" id="lightboxMeta"></div>
 </div>
 
@@ -334,12 +347,15 @@
   }
 
   function WorksPage({ceramics, drawings}) {
-    const sizes = ['feature','feature','normal','feature','xsmall','normal','normal','feature','normal','small','normal','normal','feature','normal'];
+    const highlightTitles = ['After she left my bed','Garden, After Dark','Manhattan','Serpentina di Córdoba','Conflict','Pearl House','Spring','Swan married Whale','Reflection on the Lake'];
+    const highlightSizes = ['feature','feature','normal','feature','xsmall','feature','normal','normal','normal'];
+    const ceramicHighlights = highlightTitles.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
+    const ceramicAlbum = ceramics.filter(w => !highlightTitles.includes(w.title));
     return (
       <>
         <header className="hero">
           <div className="institution">Joon Park · Portfolio</div>
-          <h1>At the boundary of<br/><em>clay &amp; ink</em>
+          <h1>At the boundary of<br/><em>clay &amp; paper</em>
             <small>Selected works, 2025 / 2026 · Singapore, Seoul</small>
           </h1>
 
@@ -348,11 +364,14 @@
           <div className="roman">Room <b>I</b></div>
           <div>
             <h2>Ceramics</h2>
-            <p>Hand-built pieces in which form arrives slowly through the hand. Eleven works tracing the textures of memory: light through a forest, the discomfort of a dental chair, a swan married to a whale.</p>
+            <p>Hand-built pieces in which form arrives slowly through the hand. Nineteen works tracing the textures of memory: light through a forest, the discomfort of a dental chair, a swan married to a whale.</p>
           </div>
         </div>
         <div className="rule" />
-        {ceramics.map((w, i) => <Plate key={w.title} work={w} size={sizes[i]||'normal'} />)}
+        {ceramicHighlights.map((w, i) => <Plate key={w.title} work={w} size={highlightSizes[i]||'normal'} />)}
+        <div className="draw-grid" style={{paddingTop: 80}}>
+          {ceramicAlbum.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+        </div>
         <blockquote className="pullquote">
           “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
           <span className="att">Statement, 2026</span>
@@ -437,9 +456,22 @@
   }
 
   function DrawItem({work, acc}) {
+    const [active, setActive] = useState(0);
+    const hasMulti = work.frames.length > 1;
+    const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
+    const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
     return (
-      <div className="draw-item" onClick={() => openLightbox(work, 0)}>
-        <div className="draw-frame"><img src={work.frames[0].src} alt={work.title} /></div>
+      <div className="draw-item">
+        <div className="draw-frame">
+          <img src={work.frames[active].src} alt={work.title} onClick={() => openLightbox(work, active)} />
+          {hasMulti && (
+            <>
+              <button className="plate-arrow plate-arrow-l" onClick={prev}>&#8592;</button>
+              <button className="plate-arrow plate-arrow-r" onClick={next}>&#8594;</button>
+              <div className="plate-counter">{active + 1} / {work.frames.length}</div>
+            </>
+          )}
+        </div>
         <div className="draw-ttl">{work.title}</div>
         <div className="draw-cap">
           <div className="meta">{work.meta} · {work.year}</div>
@@ -452,7 +484,7 @@
     return (
       <div className="about">
         <div className="head">Statement</div>
-        <h2>at the <em>boundary</em> of clay &amp; ink.</h2>
+        <h2>at the <em>boundary</em> of clay &amp; paper.</h2>
         <p>My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay.</p>
         <p>The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces. I work at the boundary of ceramics and painting, exploring the moment when vivid experience becomes material.</p>
         <div className="about-block">
@@ -469,17 +501,55 @@
     );
   }
 
+  let lightboxWork = null;
+  let lightboxIdx = 0;
+
+  function renderLightbox() {
+    if (!lightboxWork) return;
+    const w = lightboxWork;
+    const hasMulti = w.frames.length > 1;
+    document.getElementById('lightboxImg').src = w.frames[lightboxIdx].src;
+    const countStr = hasMulti ? ` · ${lightboxIdx + 1} / ${w.frames.length}` : '';
+    document.getElementById('lightboxMeta').textContent = `${w.title} · ${w.meta} · ${w.year}${countStr}`;
+    document.getElementById('lightboxPrev').style.display = hasMulti ? 'block' : 'none';
+    document.getElementById('lightboxNext').style.display = hasMulti ? 'block' : 'none';
+  }
+
   window.openLightbox = function(work, idx) {
-    const lb = document.getElementById('lightbox');
-    document.getElementById('lightboxImg').src = work.frames[idx].src;
-    document.getElementById('lightboxMeta').textContent = `${work.title} · ${work.meta} · ${work.year}`;
-    lb.classList.add('open');
+    lightboxWork = work;
+    lightboxIdx = idx;
+    renderLightbox();
+    document.getElementById('lightbox').classList.add('open');
   };
+
+  function lightboxPrev(e) {
+    e.stopPropagation();
+    lightboxIdx = (lightboxIdx - 1 + lightboxWork.frames.length) % lightboxWork.frames.length;
+    renderLightbox();
+  }
+  function lightboxNext(e) {
+    e.stopPropagation();
+    lightboxIdx = (lightboxIdx + 1) % lightboxWork.frames.length;
+    renderLightbox();
+  }
+
+  document.getElementById('lightboxPrev').addEventListener('click', lightboxPrev);
+  document.getElementById('lightboxNext').addEventListener('click', lightboxNext);
   document.getElementById('lightbox').addEventListener('click', () => {
     document.getElementById('lightbox').classList.remove('open');
   });
   document.addEventListener('keydown', e => {
+    const isOpen = document.getElementById('lightbox').classList.contains('open');
+    if (!isOpen) return;
     if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+    if (e.key === 'ArrowLeft' && lightboxWork && lightboxWork.frames.length > 1) {
+      lightboxIdx = (lightboxIdx - 1 + lightboxWork.frames.length) % lightboxWork.frames.length;
+      renderLightbox();
+    }
+    if (e.key === 'ArrowRight' && lightboxWork && lightboxWork.frames.length > 1) {
+      lightboxIdx = (lightboxIdx + 1) % lightboxWork.frames.length;
+      renderLightbox();
+    }
   });
 
   ReactDOM.createRoot(document.getElementById('root')).render(<App />);
