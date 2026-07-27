@@ -158,6 +158,16 @@
   .draw-cap .ttl { font-family: var(--serif); font-style: italic; font-size: 17px; margin-bottom: 4px; }
   .draw-cap .meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
 
+  .label-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+  .label-facts { flex: 1; min-width: 0; }
+  .note-toggle {
+    flex-shrink: 0; background: none; border: none; color: var(--muted);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0; cursor: pointer; transition: color 0.2s; white-space: nowrap; line-height: 1.6;
+  }
+  .note-toggle:hover { color: var(--ink); }
+  .note-text { font-size: 14px; line-height: 1.75; color: var(--ink); max-width: 560px; margin-top: 18px; white-space: pre-line; }
+  .note-text.empty { color: var(--muted); font-style: italic; }
   .colophon { margin-top: 200px; padding: 80px 56px; border-top: 1px solid var(--ink); max-width: 1400px; margin-left: auto; margin-right: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); }
   .colophon h4 { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; font-weight: 500; }
   .colophon a { text-decoration: underline; text-underline-offset: 3px; }
@@ -275,10 +285,8 @@
     { kind:'ceramic', title:'Spring', meta:'Hand-built ceramic', year:2025, frames:[{src:'images/20250823_120614.jpg'}]},
     { kind:'ceramic', title:'The Plate for Well-fermented Cheese', meta:'Hand-built ceramic', year:2025, frames:[{src:'images/20250827_124948.jpg'}]},
     { kind:'ceramic', title:'Randonnée', meta:'Hand-built ceramic', year:2026, frames:[{src:'images/20250804_135610.jpg'}]},
-    { kind:'ceramic', title:'Wiggle Wiggle I', meta:'Hand-built ceramic', year:2026,
-      frames:[{src:'images/20260502_144151.jpg'},{src:'images/20260502_122110.jpg'},{src:'images/20260502_095132.jpg'},{src:'images/20260502_095143.jpg'}]},
-    { kind:'ceramic', title:'Wiggle Wiggle II', meta:'Hand-built ceramic', year:2026,
-      frames:[{src:'images/20260502_095114.jpg'},{src:'images/20260502_095123.jpg'},{src:'images/20260502_095150.jpg'}]},
+    { kind:'ceramic', title:'Wiggle Wiggle', meta:'Hand-built ceramic', year:2026,
+      frames:[{src:'images/20260502_144151.jpg'},{src:'images/20260502_122110.jpg'},{src:'images/20260502_095132.jpg'},{src:'images/20260502_095143.jpg'},{src:'images/20260502_095114.jpg'},{src:'images/20260502_095123.jpg'},{src:'images/20260502_095150.jpg'}]},
     { kind:'ceramic', title:'Pearl House', meta:'Hand-built ceramic', year:2026,
     frames:[{src:'images/20260505_211916.jpg'},{src:'images/20260505_211840.jpg'},{src:'images/20260505_212005.jpg'}]},
     { kind:'ceramic', title:'Minotaur, In Need of Retirement', meta:'Hand-built ceramic, unfired, acrylic marker on select views', year:2026,
@@ -287,11 +295,11 @@
     frames:[{src:'images/Huh 1.jpg'},{src:'images/Huh 2.jpg'},{src:'images/Huh 3.jpg'},{src:'images/Huh 4.jpg'},{src:'images/Huh.jpg'}]},
     { kind:'ceramic', title:'Frankenstein', meta:'Hand-built ceramic, unfired', year:2026,
     frames:[{src:'images/Frankenstein.jpg'},{src:'images/Frankenstein 2.jpg'}]},
+  { kind:'drawing', title:'Stained Point Taken', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Pointed Out.jpg'}]},
+  { kind:'drawing', title:'Stained Prometheus', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Prometheus.jpg'}]},
   { kind:'drawing', title:'Crossing the Line to Supermarket', meta:'Pen drawing', year:2026, frames:[{src:'images/Cross the line to supermarket.jpg'}]},
   { kind:'drawing', title:'2126', meta:'Pen drawing', year:2026, frames:[{src:'images/2126.jpg'}]},
   { kind:'drawing', title:'Trembling', meta:'Pen drawing', year:2026, frames:[{src:'images/Trembling.jpg'}]},
-  { kind:'drawing', title:'Stained Point Taken', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Pointed Out.jpg'}]},
-  { kind:'drawing', title:'Stained Prometheus', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Prometheus.jpg'}]},
   { kind:'drawing', title:'Dancing Singapore', meta:'Pen drawing', year:2026, frames:[{src:'images/20260427_102753.jpg'}]},
     { kind:'drawing', title:'Uncontained', meta:'Pen drawing', year:2026, frames:[{src:'images/IMG_20260521_173019_546.jpg'}]},
     { kind:'drawing', title:'Who Owns Gardens of the Bay?', meta:'Pen drawing', year:2026, frames:[{src:'images/20260424_102711.jpg'}]},
@@ -325,12 +333,65 @@
     { title:'Stained Person on the Throne', meta:'Acrylic marker on paper', year:2026, frames:[
       {src:'images/On the Throne.jpg'},
       {src:'images/On the Throne 2.jpg'},
+      {src:'images/On the Throne 3.jpg'},
     ]},
     { title:'Stained Pickleball (Where is the ball?)', meta:'Acrylic marker on paper', year:2026, frames:[
       {src:'images/Pickleball 1.jpg'},
       {src:'images/Pickleball 2.jpg'},
       {src:'images/Pickleball 3.jpg'},
     ]},
+    { title:'Stained Sunday Afternoon', meta:'Acrylic marker and brush pen on paper', year:2026, frames:[{src:'images/Stained Sunday Afternoon.jpg'}]},
+  ];
+
+  const ARTIST_NOTES = [
+    { title: "Serpentina di Córdoba", note: "Inspired by the warm tones and fluid curves of Córdoba, a city where distinct cultural layers overlay. The sweeping lines capture the harmonious flow of light, color, and architecture found within its historic space." },
+    { title: "Spring", note: "Capturing the subtle yet dynamic awakening of nature. The interplay of soft hues and emerging forms evokes a sense of renewal, vitality, and light." },
+    { title: "Manhattan", note: "A study of urban rhythm, structured geometry, and quiet solitude amidst bustling energy. Vertical lines and contrasting textures reflect the complex soul of the modern metropolis." },
+    { title: "Garden, After Dark", note: "A personal sanctuary crafted from organic textures and deep, layered palettes. Exploring the intimate dialogue between nature's tranquility and inner contemplation." },
+    { title: "3 Folks", note: "An exploration of human connection and shared space among three distinct presences. Overlapping forms and nuanced tones reflect the quiet dialogue, warmth, and subtle dynamics of collective intimacy." },
+    { title: "Conflict", note: "A visual investigation of tension, raw friction, and dynamic equilibrium. Sharp contrasts and colliding textures capture the emotional intensity and energy born from opposing forces." },
+    { title: "Swan married Whale", note: "This sculptural piece is born from a fascination with two of nature's most graceful curved surfaces: the elegant silhouette and sweeping tail feathers of a swan gliding upon a tranquil lake, and the powerful flukes of a whale breaking the deep ocean surface.\n\nCrafted by gently bending a thin ceramic slab into an organic, fluid form, it seeks to visualize the delicate harmony between calmness and the dynamic energy of movement through water. The expansive, graceful curves explore the elegant contrast between these two majestic tail forms.\n\nThe indigo and grey-blue glazes, bleeding across the surface like ink on paper, trace the ceaseless flow of water. The bold, dark drips along the edge capture the precise moment the surface is cut. I aimed to express tranquility in motion, a power that is inherently gentle." },
+    { title: "Reflection on the Lake", note: "Inspired by the serene memory of leaves mirrored upon the crystal-clear surface of Lake Bled in Slovenia. The gentle undulations of the ceramic plane evoke the subtle ripples moving across tranquil waters, while the fluid, ink-like strokes capture the fleeting reflection of nature resting upon a liquid canvas." },
+    { title: "After Dentist Office Visit", note: "A visceral, sculptural translation of the overwhelming and raw sensory trauma experienced during dental treatment. The vessel's intentionally unrefined, jagged, and uneven rim mirrors the extreme physical tension and heightened sensitivity of the body during the procedure. The heavy, uncontrolled, and bleeding black glaze drips that cascade down the form symbolize the pulsating, uncontained, and excruciating sensation of pain that cannot be suppressed. Through this form, I sought to freeze the primal feeling of vulnerability and helplessness born from acute physical trauma." },
+    { title: "Don't Forget to Make My Head", note: "Born from the humorous reality of running out of studio time while sculpting the human form. With no time left to craft the head, the process was abruptly halted, turning a moment of constraint into a brilliant 'happy accident.' The headless, anonymous form paired with a nonchalant, relaxed posture transforms a race against the clock into a witty commentary on completeness and spontaneous resolution." },
+    { title: "Forest Light", note: "Inspired by the serene depth of a forest at sunset, this piece captures the interplay of light filtering through the trees. The deep indigo and navy background represents the gathering shadows and twilight stillness of the woods. Strikes of raw yellow slip-trailing symbolize the final, golden sunbeams piercing through the dark tree trunks. The undulating ceramic form evokes the forest topography and guides the flow of light across the visual terrain." },
+    { title: "Flow", note: "An exploration of what it feels like to gaze at the sea on a pitch-black night, completely devoid of light. The deep, dark tone and softly undulating contours embody the silent, continuous swell of ocean waters moving through total darkness. Delicate lines carved into the ceramic surface trace the subtle, unseen currents, capturing the immense yet peaceful breath of a nocturnal tide." },
+    { title: "The Plate for Well-fermented Cheese", note: "Created with a specific sense of humor and a deep appreciation for pungent, aged cheeses, this piece is titled The Plate for Well-fermented Cheese.\n\nSculpted in the playful form of a well-worn sandal, it serves as a self-deprecating nod to the characteristically musty aroma shared by aged cheeses and used footwear. Serving my favorite, strongly aromatic cheeses from this unique 'shoe' plate adds a layer of wit to the dining experience, celebrating the complex flavors while cheekily acknowledging their common olfactory comparison.\n\nThe hand-sculpted texture and blue strap reinforce the piece's artisanal and lighthearted character." },
+    { title: "Randonnée", note: "In French, 'randonnée' refers to a journey or circuit walk that ultimately leads back to where it began. Having lived in five countries and traveled extensively, I crafted this piece as my most humble and unpretentious vessel.\n\nStripped of all excess, its minimal form reflects the natural cycle of clay, molded and fired into a plate, yet destined to eventually break and return to the earth. It is an exploration of impermanence, simplicity, and the beautiful inevitability of returning to one's origins." },
+    { title: "Wiggle Wiggle", note: "Inspired by the vibrant tropical wildlife of Singapore, particularly the striking colors and fluid movements of tropical caterpillars. These cutlery rests capture the playful, organic wiggle of a caterpillar through looping ceramic ribbons designed to hold utensils. Bright, layered glaze patterns and dynamic twists turn a small, vivid encounter with nature into a functional and whimsical element for the dining table." },
+    { title: "Minotaur, In Need of Retirement", note: "An empathetic and subtly humorous reinterpretation of the mythical Minotaur, reframing a fearsome monster into a weary, overworked victim of fate. Born through divine punishment and human greed, he was locked away in a dark labyrinth and forced into a continuous cycle of bloody sacrifices.\n\nDraped in a simple apron to shield himself from the constant blood splatter, his slumped posture and exhausted facial expression convey profound burnt-out melancholy. Beyond the heroic legends lies a tragic figure who never chose his gruesome destiny, capturing a poignant creature who is, above all else, desperately in need of retirement." },
+    { title: "Huh?", note: "Inspired by a memorable everyday scene witnessed while living in Japan, a person deeply immersed in their own isolated world behind wireless earbuds, suddenly startled into a confused 'Huh?' when unexpectedly addressed.\n\nThe slightly tilted chin and dazed, frozen facial expression capture that disorienting split second when music fades and reality abruptly breaks through. It is a witty, sculptured slice of modern life, observing the delicate boundary between urban solitude and spontaneous human interaction." },
+    { title: "Frankenstein", note: "A poignant sculpture exploring the existential grief and isolation of Frankenstein's creation, reinterpreted through the lens of a being utterly abandoned by its creator.\n\nReframing the creature away from traditional horror tropes, this piece captures the quiet agony of being rejected by the very hands that brought him to life. The raw, cracked texture of the clay mirrors both physical scars and a fractured soul. With heavy, sorrowful eyes and a silent, melancholic expression, the work freezes the tragic reality of absolute abandonment, revealing a vulnerable entity longing for warmth and acceptance." },
+    { title: "A Stained Person on the Couch", note: "A work from the 'Stained' series, inspired by the delicate, segmented beauty of the stained glass at Sainte-Chapelle in Paris. It captures a routine, comfortable posture I frequently assume, resting peacefully in a moment of self-immersion.\n\nThe bold outlines anchor the piece like heavy window frames or sturdy tree trunks, while the intricate internal dots and patterns reflect the radiant mosaic of stained glass. Loose strokes extending past the contours branch out like climbing vines, organically intertwining the figure with the couch. These vine-like tendrils evoke a sense of taking deep root in everyday relaxation, animating the quiet space with organic vitality." },
+    { title: "Stained Entry", note: "A piece from the 'Stained' series capturing the suspended, graceful moment of a figure diving into water.\n\nThis artwork highlights the subtle beauty of 'Yeobaek' (여백, empty / negative space). By intentionally leaving the water unpainted, the vast canvas invites the viewer's imagination to fill the void. The fluid, sweeping brushlines trace the dynamic arc of the dive, conveying speed and liberation just before entry. The striking contrast between the figure's mosaic-like interior and the surrounding emptiness turns a fleeting gesture into a pure, timeless motion." },
+    { title: "Stained Anatomy", note: "An abstract reimagining of the full human figure, Stained Anatomy translates the luminous aesthetic of stained glass into a fluid, living composition.\n\nBold, lead-like contours weave seamlessly across the canvas, tracing an organic rhythm that encompasses the subtle suggestions of a face, torso, limbs, and feet. Rather than rigid anatomical boundaries, the lines current like braided ribbons and gentle waves, infusing the figure with a soft, sinuous elegance. Filled with jewel-toned mosaic cells and delicate stippling, the artwork captures an intimate, glowing vitality, transforming the entire body into a tapestry of inner light." },
+    { title: "Stained Workout", note: "Translating the quiet intensity of a home workout into the language of stained glass, Stained Workout explores the sacred quality found within daily personal routines.\n\nA striking diagonal posture, anchored firmly to the ground while reaching dynamically upward, creates a powerful architectural balance. Bold lead-like contours isolate the tension, breath, and core strength generated throughout the body, filling each segment with vibrant stippled color. Here, the physical exertion of everyday training is reimagined as a meditative ritual, where sweat and focus transform into a glowing mosaic of inner strength." },
+    { title: "Stained Work", note: "An abstract portrayal of the daily work routine, Stained Work translates the static activity of sitting at a desk into a fluid, almost dynamic journey.\n\nUsing the series' signature bold, lead-like contours and intricate stippled mosaic cells, the artwork isolates each element of the anatomy, the furniture, and the technology. The central focus is the symbiotic fusion of the chair and table into a single, cohesive form. Their support structures are singular and sinuous; the chair's base flows in an S-curve, while the table's pillar dissolves into a wave-like form on the ground.\n\nThis integration transforms the desk and chair into an unusual vehicle or craft. The figure, nestled within, appears less like a worker and more like a pilot navigating a thought-realm. The everyday, stationary act of work is reimagined as a moving experience, emphasizing the fluid, non-static nature of thought and digital focus. Work has its own movement, its own inner velocity." },
+    { title: "Stained Scoliosis", note: "The foundational origin piece of the Stained series, Stained Scoliosis stems from a deeply personal revelation: finding aesthetic beauty within the curved silhouette of scoliosis seen on childhood X-rays.\n\nInstead of viewing the deviation as a medical flaw, the artwork embraces the curvature as a fluid, organic rhythm. Bold, lead-like contours trace the spinal path across the canvas, bridging the gap between medical imaging and stained-glass architecture. Each cell is filled with vibrant, jewel-toned color, transforming a physical trait into a glowing tapestry of light. This piece marks the birth of the series, celebrating self-acceptance and the unexpected elegance found within our unique forms." },
+    { title: "Stained Person on the Throne", note: "Stained Person on the Throne looks at a very familiar everyday moment: scrolling through a smartphone while sitting on the toilet.\n\nBold contours outline the forward-curved posture, while fine stippling and color cells fill the figure. It offers an honest, lighthearted look at a quiet personal routine, capturing the rhythm of modern life through clean lines and color." },
+    { title: "Stained Pickleball (Where is the ball?)", note: "Stained Pickleball captures the energy and focus of playing pickleball.\n\nAn over-the-shoulder perspective places the viewer right on the court behind the player. Blue court lines, a wavy net structure, and colorful stippling across the figure come together to show the movement, pace, and simple fun of the game." },
+    { title: "Stained Sunday Afternoon", note: "Stained Sunday Afternoon captures a peaceful Sunday moment of relaxing on the couch.\n\nThe sofa and the standing floor lamp bring a warm, cozy feel to the scene. Bold contours trace the long, resting figure, while stippling and color fill the form to share a quiet, relatable sense of weekend comfort." },
+    { title: "Crossing the Line to Supermarket", note: "Crossing the Line to Supermarket captures a scene observed on an everyday walk to the grocery store.\n\nViewed from an elevated top-down perspective, a silhouette walks along a winding path framed by a road, trees, and water. Bold black contours divide each landscape section while detailed stippling fills the space, turning a simple routine errand into a clean, rhythmic view of a daily route." },
+    { title: "2126", note: "2126 imagines a future where rising sea levels submerge some of the land back into the ocean, recalling an ancient era when parts of today's continents were deep underwater.\n\nSquid, fish, and eels swim freely around some mountain peaks now covered by the sea. Rhythmic wave lines near the top and detailed stippling throughout capture a quiet underwater world, reflecting on the long cycle of land and ocean through bold lines and colorful dots." },
+    { title: "Stained Point Taken", note: "Stained Point Taken captures a tense confrontation reminiscent of a scene from a gritty crime movie.\n\nThe bold composition places two figures face-to-face as one points a gun directly at the other. Jagged, thorn-like outlines give the figures a rough and dangerous edge, while fine stippling and selective pops of color bring sharp focus to this cinematic moment." },
+    { title: "Trembling", note: "Trembling is a black ink drawing inspired by the twisted forms of bush vines, reinterpreted with an elongated trunk and expressive brushwork.\n\nReimagining the traditional low-growing vine into a taller structure, the drawing features drill-like branches extending upward with quivering black lines. Executed entirely in monochromatic ink, it captures the raw motion and unrefined energy of nature through simple line variations." },
+    { title: "Stained Prometheus", note: "Stained Prometheus offers a humanized perspective on the classic myth, bringing focus to the sheer exhaustion and thirst within an endless ordeal.\n\nBound in chains, the figure strains forward toward a single drop falling from above, capturing the physical fatigue and longing of a god whose body heals only to suffer again. Bold outlines, fine stippling, and structured color blocks portray both the weight of his continuous trial and the quiet endurance driven by his sacrifice for humanity." },
+    { title: "Dancing Singapore", note: "Dancing Singapore blends the fluid forms of tropical trees observed in Singapore with the rhythmic movement of giant centipedes.\n\nTrunks and branches sway upward in dancing motions, accented by bright orange loops, dots, and leg-like patterns running along their sides. Detailed pen hatching in brown and black ink contrasts with lively orange accents, capturing the organic, dynamic energy of tropical nature." },
+    { title: "Uncontained", note: "Uncontained captures the lively energy of a plant expanding far beyond the limits of a small pot.\n\nSketched at the base, the small container gives way to curving green leaves, dotted lines, and fluid strokes that burst outward. Using light colored pencil and pen linework, the drawing presents an organic form growing freely past its boundary." },
+    { title: "Who Owns Gardens of the Bay?", note: "While everyone marvels at the massive, futuristic Supertrees, the real master of Singapore's urban jungle might just be this tiny gecko right in the center. Inspired by the countless geckos that silently share the city with us, this piece offers a lighthearted and witty perspective on who truly owns the garden." },
+    { title: "Treetopus", note: "Inspired by the striking resemblance between the winding roots of tropical trees and the fluid movement of octopus tentacles, Treetopus brings a whimsical hybrid to life. Featuring rich, textured line work complemented by vibrant blue suction-cup accents and red highlights, this piece playfully blurs the boundary between botanical forms and marine life." },
+    { title: "My Neighbor in Singapore", note: "Inspired by a tiny gecko that briefly moved onto the shoe rack outside my home in Singapore. Fascinated by how geckos change their colors to blend into their surroundings like chameleons, I reimagined this little visitor camouflage-bound within vibrant flowers. Featuring cheerful, petal-like toes and lively blue-and-orange patterns, this piece warmly captures a sweet, unforgettable encounter with an urban neighbor." },
+    { title: "Dental Care with a Bird", note: "Created while anxiously awaiting a dental appointment prior to a diagnosis, this piece gracefully transforms apprehension into playful optimism. Inspired by the famous symbiotic bond between crocodiles and Egyptian plovers, it features a child jumping along tooth-shaped stepping stones alongside a friendly bird. Through this whimsical interaction, the daunting prospect of dental care is reframed as a heartwarming moment of shared care and play." },
+    { title: "Conceptual Ceramic Vase", note: "Inspired by the iconic geometric tessellation of Issey Miyake's signature Bao Bao design, this illustration reimagines fashion's structural artistry as a conceptual ceramic vase. The sharply articulated, architectural facets of the vessel create a striking visual counterpoint to the soft, organic forms of the vibrant flowers blooming within." },
+    { title: "Happiness", note: "This artwork captures a warm and joyful moment between two middle-aged women sharing a conversation near Gyeonghuigung. Seated together on a rounded stone bench beneath the gentle presence of an old tree, their sincere interaction conveys the genuine warmth and simple, pure happiness found in everyday life." },
+    { title: "Vein", note: "This artwork reflects the philosophical idea that all elements of nature, earth, water, air, trees, and flowers, are interconnected. Emulating the function of veins that transport life throughout a body, colorful line work flows from the roots through the trunk to the blossoming flowers, illustrating the organic bond and continuous cycle of life." },
+    { title: "Path", note: "This artwork reinterprets the winding grain of a tree trunk as a 'path' representing life's journey toward a hopeful future. Following the curved, textured trunk leads the viewer's eye up to a crown of vibrant green leaves, symbolizing a positive destination and bright hope reached through life's turns and curves." },
+    { title: "Wuthering Heights", note: "Inspired by a scene from the film Wuthering Heights, this artwork stylishly depicts the side profile of a figure dressed in classic 19th-century attire, complete with an elegant gown, hat, and parasol. The detailed diagonal hatching of the purple dress creates a striking contrast with the orange accent pattern inside the parasol, capturing a timeless period aesthetic along with a quiet, captivating presence." },
+    { title: "Traffic Accidents", note: "This artwork captures a playful and imaginative perspective inspired by the crowded koi ponds often found in Japanese gardens. Depicting colorful koi fish swimming and crossing paths in various directions, the composition humorously analogies their movement to a near-collision 'traffic accident' on a busy road. The vibrant hues and dynamic line work bring a cheerful, lively rhythm to the piece." },
+    { title: "Millions of Ways", note: "This artwork represents the countless paths and infinite possibilities of life through an intertwining of geometric staircases and lines. Various paths, some straight, some winding, and others looping back, are rendered in a vibrant array of colors, including blue, green, orange, yellow, and purple. Though seemingly complex, each line, with its unique color and direction, symbolizes the distinct and beautiful journey of life that each individual creates." },
+    { title: "Fishermen", note: "This artwork creatively captures fishermen resting or sharing everyday moments in a quiet Mediterranean village using unique geometric lines and planes. The light blue stripe patterns evoke the refreshing spirit of the Mediterranean Sea, while warm beige tones and fluid brown outlines harmonize to convey a peaceful and relaxed snapshot of a fisherman's life." },
+    { title: "Pose", note: "Inspired by the striking and confident silhouette of a tree spotted at a botanical garden, this artwork captures nature posing like a model on a fashion week runway. Dynamic diagonal branches, a subtle yellow aura, and textured green foliage combine to highlight the stylish, elegant, and fashionable energy inherent in the natural world." },
+    { title: "Bull Trap", note: "This artwork explores the dual concept of a 'Bull Trap', capturing both the physical moment a charging bull suddenly shifts direction and the financial term describing a false market rebound that leads to a decline. The dynamic angle of the bull, the dense hatching of brown pen lines, and the sharp white vertical gap across its torso visually emphasize a sudden pivot and unexpected shift in momentum." },
   ];
 
   function App() {
@@ -412,8 +473,11 @@
 
   function Plate({work, acc, size}) {
     const [active, setActive] = useState(0);
+    const [noteOpen, setNoteOpen] = useState(false);
     const hasMulti = work.frames.length > 1;
     const currentTitle = (work.frames[active] && work.frames[active].label) ? work.frames[active].label : work.title;
+    const noteEntry = ARTIST_NOTES.find(n => n.title === currentTitle && n.note);
+    useEffect(() => { setNoteOpen(false); }, [active]);
     const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
     const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
     return (
@@ -435,8 +499,18 @@
           <div className="label-title">{currentTitle}</div>
           {work.note && <div className="label-note">{work.note}</div>}
           <div className="label">
-            <div className="yr">{work.year}</div>
-            <div className="med">{work.meta}</div>
+            <div className="label-row">
+              <div className="label-facts">
+                <div className="yr">{work.year}</div>
+                <div className="med">{work.meta}</div>
+              </div>
+              {noteEntry && (
+                <button className="note-toggle" onClick={() => setNoteOpen(o => !o)}>
+                  {noteOpen ? '\u2212 Artist\u2019s Note' : '+ Artist\u2019s Note'}
+                </button>
+              )}
+            </div>
+            {noteEntry && noteOpen && <div className="note-text">{noteEntry.note}</div>}
           </div>
         </div>
       </div>
@@ -469,7 +543,9 @@
 
   function DrawItem({work, acc}) {
     const [active, setActive] = useState(0);
+    const [noteOpen, setNoteOpen] = useState(false);
     const hasMulti = work.frames.length > 1;
+    const noteEntry = ARTIST_NOTES.find(n => n.title === work.title && n.note);
     const prev = (e) => { e.stopPropagation(); setActive(a => (a - 1 + work.frames.length) % work.frames.length); };
     const next = (e) => { e.stopPropagation(); setActive(a => (a + 1) % work.frames.length); };
     return (
@@ -486,7 +562,15 @@
         </div>
         <div className="draw-ttl">{work.title}</div>
         <div className="draw-cap">
-          <div className="meta">{work.meta} · {work.year}</div>
+          <div className="label-row">
+            <div className="meta">{work.meta} · {work.year}</div>
+            {noteEntry && (
+              <button className="note-toggle" onClick={() => setNoteOpen(o => !o)}>
+                {noteOpen ? '\u2212 Artist\u2019s Note' : '+ Artist\u2019s Note'}
+              </button>
+            )}
+          </div>
+          {noteEntry && noteOpen && <div className="note-text">{noteEntry.note}</div>}
         </div>
       </div>
     );
