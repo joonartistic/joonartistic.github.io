@@ -168,6 +168,10 @@
   .note-toggle:hover { color: var(--ink); }
   .note-text { font-size: 14px; line-height: 1.75; color: var(--ink); max-width: 560px; margin-top: 18px; white-space: pre-line; }
   .note-text.empty { color: var(--muted); font-style: italic; }
+  .singles-head { max-width: 1400px; margin: 140px auto 0; padding: 0 56px 28px; border-bottom: 1px solid var(--rule); }
+  .singles-head h3 { font-family: var(--serif); font-style: italic; font-size: 26px; font-weight: 400; margin: 0 0 8px; }
+  .singles-head p { font-size: 13px; color: var(--muted); margin: 0; }
+  .singles-head + .draw-grid { padding-top: 56px; }
   .colophon { margin-top: 200px; padding: 80px 56px; border-top: 1px solid var(--ink); max-width: 1400px; margin-left: auto; margin-right: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 36px; font-family: var(--mono); font-size: 11px; line-height: 1.7; color: var(--muted); }
   .colophon h4 { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink); margin-bottom: 12px; font-weight: 500; }
   .colophon a { text-decoration: underline; text-underline-offset: 3px; }
@@ -452,15 +456,28 @@
   }
 
   function WorksPage({ceramics, drawings}) {
-    const highlightTitles = ['After she left my bed','Garden, After Dark','Manhattan','Serpentina di Córdoba','Pearl House','Swan married Whale','Reflection on the Lake'];
-    const highlightSizes = ['feature','feature','normal','feature','feature','normal','normal'];
-    const albumOrder = ['Conflict','Spring','Minotaur, In Need of Retirement'];
-    const ceramicHighlights = highlightTitles.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
-    const ceramicAlbum = ceramics.filter(w => !highlightTitles.includes(w.title))
-      .sort((a, b) => {
-        const ia = albumOrder.indexOf(a.title), ib = albumOrder.indexOf(b.title);
-        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
-      });
+    // Stained series: works on paper
+    const stainedFeature = ['A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pipe Smoker','Stained Pour','Stained Boxers','Stained Person on the Throne','Stained Scoliosis','Stained Chime','Stained Entry','Stained Jump'];
+    const stainedGridOrder = ['Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus'];
+    const stainedAll = new Set([...stainedFeature, ...stainedGridOrder]);
+
+    const stainedPlates = stainedFeature.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
+    const stainedGrid = stainedGridOrder
+      .map(t => LARGE_DRAWINGS.find(w => w.title === t) || drawings.find(w => w.title === t))
+      .filter(Boolean);
+
+    // Randonnee series: ceramics
+    const randonneeFeature = ['After she left my bed','Garden, After Dark','Manhattan','Serpentina di Córdoba','Pearl House','Swan married Whale','Reflection on the Lake'];
+    const randonneeGridOrder = ['Forest Light','Flow','Spring','Randonnée'];
+    const randonneeAll = new Set([...randonneeFeature, ...randonneeGridOrder]);
+
+    const randonneePlates = randonneeFeature.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
+    const randonneeGrid = randonneeGridOrder.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
+
+    // Singles: everything else
+    const singleCeramics = ceramics.filter(w => !randonneeAll.has(w.title));
+    const singleDrawings = drawings.filter(w => !stainedAll.has(w.title));
+
     return (
       <>
         <header className="hero">
@@ -473,14 +490,14 @@
         <div className="room-head">
           <div className="roman">Room <b>I</b></div>
           <div>
-            <h2>Ceramics</h2>
-            <p>Hand-built pieces in which form arrives slowly through the hand, tracing the textures of memory: light through a forest, the discomfort of a dental chair, a swan married to a whale.</p>
+            <h2>Stained</h2>
+            <p>The series began with a shirt bleached by accident, and the stain turned out to be the most interesting thing about it. We leave marks on the things we own, on the people who remember us, on the ground itself, and most of them are not chosen. These drawings work the same way.</p>
           </div>
         </div>
         <div className="rule" />
-        {ceramicHighlights.map((w, i) => <Plate key={w.title} work={w} size={highlightSizes[i]||'normal'} />)}
+        {stainedPlates.map((w) => <Plate key={w.title} work={w} size="feature" />)}
         <div className="draw-grid" style={{paddingTop: 80}}>
-          {ceramicAlbum.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+          {stainedGrid.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
         <blockquote className="pullquote">
           “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
@@ -489,19 +506,27 @@
         <div className="room-head">
           <div className="roman">Room <b>II</b></div>
           <div>
-            <h2>Works on Paper</h2>
-            <p>Pen, brush pen, and acrylic marker on paper. A diary of looking, alongside the ongoing Stained series, where figures are built from bold contours and stippled colour.</p>
+            <h2>Randonnée</h2>
+            <p>In French, randonnée means a walk that returns to where it began. These pieces come from experiences that kept surfacing long after they ended, some of them places, some of them smaller than that.</p>
           </div>
         </div>
         <div className="rule" />
-        {LARGE_DRAWINGS.map((w) => <Plate key={w.title} work={w} size="feature" />)}
+        {randonneePlates.map((w, i) => <Plate key={w.title} work={w} size={['feature','feature','normal','feature','feature','normal','normal'][i] || 'normal'} />)}
         <div className="draw-grid" style={{paddingTop: 80}}>
-          {drawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+12).padStart(2,'0')} />)}
+          {randonneeGrid.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+        </div>
+        <div className="singles-head">
+          <h3>Singles</h3>
+          <p>Work outside the two series.</p>
+        </div>
+        <div className="draw-grid">
+          {singleCeramics.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+          {singleDrawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
           <div><h4>Contact</h4><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer">@joonartistic</a></div>
-          <div><h4>Catalogue</h4>Vol. I · 2025/2026<br/>23 works</div>
+          <div><h4>Catalogue</h4>Vol. I · 2025/2026</div>
           <div><h4>©</h4>Joon Park, 2026<br/>All rights reserved</div>
         </footer>
       </>
@@ -618,8 +643,21 @@
       <div className="about">
         <div className="head">Statement</div>
         <h2>at the <em>boundary</em> of clay &amp; paper.</h2>
-        <p>My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay.</p>
-        <p>The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces. I work at the boundary of ceramics and painting, exploring the moment when vivid experience becomes material.</p>
+        <p>My work begins with personal experience. The quality of light in a forest, a landscape encountered while traveling, the discomfort of a dental procedure, the textures of everyday life find their way onto clay and paper.</p>
+        <div className="about-block">
+          <div className="about-label">Stained &nbsp;·&nbsp; 2026 to present</div>
+          <p>The series began with a shirt. Travelling abroad and unable to read the label on the detergent, I bleached it by accident. The colour lifted in patches and left a pattern I could not have designed. I kept the shirt and still wear it, because the stain turned out to be the most interesting thing about it. Every time I put it on I am back in that laundry room, in a country whose language I could not read.</p>
+          <p>That is what a stain does. It holds a moment in place without asking permission. We leave marks on the things we own, on the people who remember us, on the ground itself, and most of them are not chosen. They are simply what accumulates from having been somewhere. A life is legible mostly through what it stained.</p>
+          <p>The drawings work the same way. Each figure is built from small marks that settle into the paper, and what emerges is closer to a residue than a portrait: an afternoon on a couch, the moment before a dive, someone waiting for wine to be poured. Nothing here is monumental. It is all just what was left behind.</p>
+          <p>The visual language comes from two places. Sainte-Chapelle in Paris, where light is broken into hundreds of small cells before it reaches the floor, which became the stippling. And yeobaek, the Korean principle that unmarked space carries as much weight as what is drawn, which is why the figures sit in almost nothing.</p>
+          <p>The faces are covered rather than erased, closer to putting a cloth over something than removing it. I think we all do this, not to deceive but because relationships need it. Without some layer between us we would say things that hurt, and most relationships would not survive it. And the body is more honest than the face. A posture, the angle of a shoulder, where the weight sits, these give more away than an expression or a sentence.</p>
+        </div>
+        <div className="about-block">
+          <div className="about-label">Randonnée &nbsp;·&nbsp; 2025 to present</div>
+          <p>In French, randonnée means a walk that returns to where it began. In Korean there is a saying that we come from earth and return to earth, and clay makes that literal. The material is dug from the ground, held in the hand for a while, and eventually breaks back down into it.</p>
+          <p>The pieces come from experiences that stayed with me after they ended. Some are places: a narrow garden in New York, a curve of light in Córdoba, leaves on the surface of a lake in Slovenia. Others are smaller than that, a night, a conversation, a feeling I could not name at the time. What they share is that they kept surfacing long after I had left them behind.</p>
+          <p>Clay holds memory differently than paper does. The form arrives slowly, through the hand, and what surfaces is rarely what I set out to make.</p>
+        </div>
         <div className="about-block">
           <div className="about-label">Curriculum Vitae</div>
           <div className="cv-row"><span className="y">2025–</span><span>Ceramics &amp; Drawing practice, Singapore / Seoul</span></div>
