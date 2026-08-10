@@ -168,6 +168,9 @@
   .note-toggle:hover { color: var(--ink); }
   .note-text { font-size: 14px; line-height: 1.75; color: var(--ink); max-width: 560px; margin-top: 18px; white-space: pre-line; }
   .note-text.empty { color: var(--muted); font-style: italic; }
+  .more-link { background: none; border: none; padding: 0; font: inherit; color: var(--ink); cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); white-space: nowrap; }
+  .more-link:hover { color: var(--accent); }
   .singles-head { max-width: 1400px; margin: 140px auto 0; padding: 0 56px 28px; border-bottom: 1px solid var(--rule); }
   .singles-head h3 { font-family: var(--serif); font-style: italic; font-size: 26px; font-weight: 400; margin: 0 0 8px; }
   .singles-head p { font-size: 13px; color: var(--muted); margin: 0; }
@@ -450,12 +453,12 @@
             <button className={page === 'about' ? 'on' : ''} onClick={() => setPage('about')}>About</button>
           </div>
         </nav>
-        {page === 'works' ? <WorksPage ceramics={ceramics} drawings={drawings} /> : <AboutPage />}
+        {page === 'works' ? <WorksPage ceramics={ceramics} drawings={drawings} onAbout={() => { setPage('about'); window.scrollTo(0,0); }} /> : <AboutPage />}
       </>
     );
   }
 
-  function WorksPage({ceramics, drawings}) {
+  function WorksPage({ceramics, drawings, onAbout}) {
     // Stained series: works on paper
     const stainedFeature = ['A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pipe Smoker','Stained Pour','Stained Boxers','Stained Person on the Throne','Stained Scoliosis','Stained Chime','Stained Entry','Stained Jump'];
     const stainedGridOrder = ['Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus'];
@@ -491,7 +494,7 @@
           <div className="roman">Room <b>I</b></div>
           <div>
             <h2>Stained</h2>
-            <p>The series began with a shirt bleached by accident, and the stain turned out to be the most interesting thing about it. We leave marks on the things we own, on the people who remember us, on the ground itself, and most of them are not chosen. These drawings work the same way.</p>
+            <p>The series began with a shirt bleached by accident, and the stain turned out to be the most interesting thing about it. We leave marks on the things we own, on the people who remember us, on the ground itself, and most of them are not chosen. These drawings work the same way. <button className="more-link" onClick={onAbout}>Read more in About</button></p>
           </div>
         </div>
         <div className="rule" />
@@ -507,7 +510,7 @@
           <div className="roman">Room <b>II</b></div>
           <div>
             <h2>Randonnée</h2>
-            <p>In French, randonnée means a walk that returns to where it began. These pieces come from experiences that kept surfacing long after they ended, some of them places, some of them smaller than that.</p>
+            <p>In French, randonnée means a walk that returns to where it began. These pieces come from experiences that kept surfacing long after they ended, some of them places, some of them smaller than that. <button className="more-link" onClick={onAbout}>Read more in About</button></p>
           </div>
         </div>
         <div className="rule" />
