@@ -350,7 +350,12 @@
     ]},
     { title:'Stained Pour', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Pour.jpg'}]},
     { title:'Stained Boxers', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Boxer.jpg'}]},
-    { title:'Stained Strings', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Strings.jpg'}]},
+    { title:'Stained Nap', meta:'Acrylic marker on paper', year:2026, frames:[
+      {src:'images/Stained Nap 1.jpg'},
+      {src:'images/Stained Nap 2.jpg'},
+    ]},
+    { title:'Stained Drip', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Drip.jpg'}]},
+    { title:'Stained Strings', meta:'Acrylic marker and pen on paper', year:2026, frames:[{src:'images/Stained Strings.jpg'}]},
     { title:'Stained Kiss', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Kiss.jpg'}]},
     { title:'Stained Parisienne', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Parisienne.jpg'}]},
     { title:'Stained Entry', meta:'Pen and brush pen drawing', year:2026, frames:[{src:'images/Stained Entry.jpg'}]},
@@ -417,6 +422,8 @@
     { title: "Stained Sunday Afternoon", note: "Stained Sunday Afternoon captures a peaceful Sunday moment of relaxing on the couch.\n\nThe sofa and the standing floor lamp bring a warm, cozy feel to the scene. Bold contours trace the long, resting figure, while stippling and color fill the form to share a quiet, relatable sense of weekend comfort." },
     { title: "Stained Pipe Smoker", note: "Stained Pipe Smoker places a gat and a long smoking pipe on an otherwise contemporary figure. The gat is the wide-brimmed horsehair hat worn by men of the Joseon dynasty, semi-transparent and finely woven, and here it sits above clothing that could belong to almost any period.\n\nNothing else is fixed. The gender is left ambiguous, and there is no clear signal of where this person comes from. Rather than presenting a single cultural identity, the drawing lets a historical Korean object and an unplaceable modern body share one outline without either taking over.\n\nThe stippled cells carry the stained glass logic of the series, breaking the figure into small units of color so that it appears lit from within. Around it, the page is left open. This is yeobaek, the Korean principle that unmarked space holds as much weight as what is drawn. The emptiness is not a missing background. It is what gives the figure air and keeps the density of the pattern readable." },
     { title: "Stained Pour", note: "Someone pouring wine at an outdoor table, somewhere in the middle of a holiday. There is no rush in the scene. One figure stands and tips the bottle, the other sits back with a hat on, and the moment sits comfortably in the pause before the first sip.\n\nThe two bodies are broken into stippled cells that let color settle into the clothing without ever going flat, and the green tabletop between them carries a looping, restless texture that contrasts with how still the people are. Around it all, the page stays empty, holding the open air of the afternoon." },
+    { title: "Stained Nap", note: "My take on Titian's Reclining Venus, filtered through Manet's Olympia, and reinterpreted through a contemporary lens. While the figure's pose remains faithful to its art historical predecessors, the surrounding environment tells a very different story. Through a large window, almost more screen than window, a machine seamlessly performs tasks that once required human labor, set beside a firmly shut door.\n\nThe door itself features ancient Egyptian pattern work, acting as an antique visual language at the threshold between two distinct realms. One side of the composition relies on soft, stippled color, while the other is defined by tight, mechanical precision. Right in the gap between these contrasting worlds lies a sleeping dog, completely indifferent to both." },
+    { title: "Stained Drip", note: "A dog waits all day for a moment of genuine connection. What it receives instead is a person sitting right beside it, eyes entirely glued to a phone. Beneath that calm surface lies a quiet, growing disappointment.\n\nThis piece captures that exact moment, the dog's own petty, playful way of getting even." },
     { title: "Stained Kiss", note: "To climb the tree, you must embrace it. There is no distance allowed. As the figure holds fast, its contours begin to follow the natural, gentle curve of the trunk, blurring the boundary between human and wood. I drew the face as I always do, pressed near the bark until the gesture became a kiss. In leaning on each other, figure and tree become one: a quiet, mutual support." },
     { title: "Stained Strings", note: "A boat, one person fishing, one person relieving himself over the side. What looks like two unrelated actions is really one loop. What we release comes back around as what we eat and drink. The fishing line and the stream are both part of the same cycle, just at different points in it." },
     { title: "Stained Parisienne", note: "A tourist on a weekend in Paris, a city that is busy and artistic at once, taking a moment to just sit and do nothing in particular. The Eiffel Tower is there because it has to be. The point is the ease of someone who has decided, just for this weekend, not to hurry." },
@@ -475,8 +482,8 @@
 
   function WorksPage({ceramics, drawings, onAbout}) {
     // Stained series: works on paper
-    const stainedFeature = ['A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pipe Smoker','Stained Pour','Stained Strings','Stained Kiss','Stained Person on the Throne','Stained Scoliosis','Stained Chime','Stained Entry','Stained Jump'];
-    const stainedGridOrder = ['Stained Boxers','Stained Parisienne','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus'];
+    const stainedFeature = ['A Stained Person on the Couch','Stained Scoliosis','Stained Jump','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','Stained Nap','Stained Strings','Stained Person on the Throne','Stained Kiss','Stained Entry'];
+    const stainedGridOrder = ['Stained Boxers','Stained Parisienne','Stained Chime','Stained Drip','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus'];
     const stainedAll = new Set([...stainedFeature, ...stainedGridOrder]);
 
     const stainedPlates = stainedFeature.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
