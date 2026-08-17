@@ -352,7 +352,7 @@
     ]},
     { title:'Stained Pour', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Pour.jpg'}]},
     { title:'Stained Boxers', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Boxer.jpg'}]},
-    { title:'Stained Sunday Noon', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Noon.jpg'}]},
+    { title:'Stained Sunday Noon', meta:'Acrylic marker on paper', year:2026, frames:[{src:'images/Stained Sunday Noon.jpg'}]},
     { title:'Stained Nap', meta:'Acrylic marker on paper', year:2026, frames:[
       {src:'images/Stained Nap 1.jpg'},
       {src:'images/Stained Nap 2.jpg'},
@@ -551,8 +551,9 @@
           <p>Work outside the two series.</p>
         </div>
         <div className="draw-grid">
+          {(() => { const dogSomm = singleDrawings.find(w => w.title === 'Dog Somm'); return dogSomm ? <DrawItem key={dogSomm.title} work={dogSomm} acc="00" /> : null; })()}
           {singleCeramics.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
-          {singleDrawings.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+          {singleDrawings.filter(w => w.title !== 'Dog Somm').map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
