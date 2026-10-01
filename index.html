@@ -304,6 +304,7 @@
     frames:[{src:'images/Frankenstein.jpg'},{src:'images/Frankenstein 2.jpg'}]},
     { kind:'ceramic', title:'Low Tide', meta:'Hand-built ceramic', year:2026,
     frames:[{src:'images/Low Tide 1.jpg'},{src:'images/Low Tide 2.jpg'},{src:'images/Low Tide 3.jpg'},{src:'images/Low Tide 4.jpg'},{src:'images/Low Tide 5.jpg'}]},
+    { kind:'ceramic', title:'Oasis in a Wadi', meta:'Hand-built ceramic', year:2026, frames:[{src:'images/Oasis in a Wadi.jpg'}]},
     { kind:'ceramic', title:'Full Moon', meta:'Hand-built ceramic, unfired', year:2026,
     frames:[{src:'images/Full Moon.jpg'},{src:'images/Full Moon 2.jpg'}]},
     { kind:'ceramic', title:'Hurt', meta:'Hand-built ceramic, unfired', year:2026,
@@ -313,6 +314,15 @@
   { kind:'drawing', title:'Stained Range', meta:'Acrylic marker on paper, 26.0 × 37.5 cm', year:2026, frames:[{src:'images/Stained Range.jpg'}]},
   { kind:'drawing', title:'Stained Corrida', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Corrida.jpg'}]},
   { kind:'drawing', title:'Dog Somm', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Dog Somm.jpg'}]},
+  { kind:'drawing', title:'Lure (Sirens)', meta:'Brush pen and acrylic marker on paper, 29.7 × 42.0 cm', year:2026, frames:[
+    {src:'images/Lure (Sirens).jpg'},
+    {src:'images/Lure (Sirens) 2.jpg'},
+  ]},
+  { kind:'drawing', title:'Valley of Whales', meta:'Brush pen and acrylic marker on paper, 29.7 × 42.0 cm (Fluke and Side by Side: 21.0 × 29.7 cm)', year:2026, frames:[
+    {label:'Valley of Whales', src:'images/Valley of Whales.jpg'},
+    {label:'Fluke', src:'images/Fluke.jpg'},
+    {label:'Side by Side', src:'images/Side by Side.jpg'},
+  ]},
   { kind:'drawing', title:'Stained Turn', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Turn 1.jpg'}, {src:'images/Stained Turn 2.jpg'},]},
   { kind:'drawing', title:'Stained Work', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Work.jpg'}]},
   { kind:'drawing', title:'Stained Workout', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Workout.jpg'}]},
@@ -441,6 +451,8 @@
     { title: "Stained Sunday Afternoon", note: "Stained Sunday Afternoon captures a peaceful Sunday moment of relaxing on the couch.\n\nThe sofa and the standing floor lamp bring a warm, cozy feel to the scene. Bold contours trace the long, resting figure, while stippling and color fill the form to share a quiet, relatable sense of weekend comfort." },
     { title: "Stained Pipe Smoker", note: "Stained Pipe Smoker places a gat and a long smoking pipe on an otherwise contemporary figure. The gat is the wide-brimmed horsehair hat worn by men of the Joseon dynasty, semi-transparent and finely woven, and here it sits above clothing that could belong to almost any period.\n\nNothing else is fixed. The gender is left ambiguous, and there is no clear signal of where this person comes from. Rather than presenting a single cultural identity, the drawing lets a historical Korean object and an unplaceable modern body share one outline without either taking over.\n\nThe stippled cells carry the stained glass logic of the series, breaking the figure into small units of color so that it appears lit from within. Around it, the page is left open. This is yeobaek, the Korean principle that unmarked space holds as much weight as what is drawn. The emptiness is not a missing background. It is what gives the figure air and keeps the density of the pattern readable." },
     { title: "Stained Pour", note: "Someone pouring wine at an outdoor table, somewhere in the middle of a holiday. There is no rush in the scene. One figure stands and tips the bottle, the other sits back with a hat on, and the moment sits comfortably in the pause before the first sip.\n\nThe two bodies are broken into stippled cells that let color settle into the clothing without ever going flat, and the green tabletop between them carries a looping, restless texture that contrasts with how still the people are. Around it all, the page stays empty, holding the open air of the afternoon." },
+    { title: "Lure (Sirens)", note: "They sat on the rocks and drew sailors toward them with their song." },
+    { title: "Oasis in a Wadi", note: "An oasis draws travelers as sirens draw sailors." },
     { title: "Stained Pit Masters", note: "Stained Pit Masters depicts a Formula 1 pit crew at work. Each member has a different role, movement, and position, yet they move together toward a single goal.\n\nWhat fascinates me is the beauty that emerges from this coordination. Individually, their actions may seem unrelated, but together they form a precise and almost choreographed performance, like a dance or ballet.\n\nThe work celebrates the moment when difference does not disappear, but becomes part of something greater through cooperation." },
     { title: "Low Tide", note: "My own interpretation of a cliff in Jeju. Each column shaped the way I felt, not measured or copied. Together they read like a curved spine." },
     { title: "Stained Spotlight", note: "A vault works thanks to sponsorship, coaching, people standing behind who rarely get seen. Stained glass only shines when there is light behind it, not because of the glass alone. We should not forget that." },
@@ -536,6 +548,10 @@
     // Singles: everything else
     const singleCeramics = ceramics.filter(w => !randonneeAll.has(w.title));
     const singleDrawings = drawings.filter(w => !stainedAll.has(w.title));
+    const singlesAll = [...singleCeramics, ...singleDrawings];
+    const singlesPinnedOrder = ['Dog Somm', 'Lure (Sirens)', 'Oasis in a Wadi', 'Valley of Whales'];
+    const singlesPinned = singlesPinnedOrder.map(t => singlesAll.find(w => w.title === t)).filter(Boolean);
+    const singlesRest = singlesAll.filter(w => !singlesPinnedOrder.includes(w.title));
 
     return (
       <>
@@ -579,9 +595,8 @@
           <p>Work outside the two series.</p>
         </div>
         <div className="draw-grid">
-          {(() => { const dogSomm = singleDrawings.find(w => w.title === 'Dog Somm'); return dogSomm ? <DrawItem key={dogSomm.title} work={dogSomm} acc="00" /> : null; })()}
-          {singleCeramics.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
-          {singleDrawings.filter(w => w.title !== 'Dog Somm').map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+          {singlesPinned.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+          {singlesRest.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
