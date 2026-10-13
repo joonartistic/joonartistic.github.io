@@ -311,6 +311,7 @@
     frames:[{src:'images/Hurt.jpg'}]},
     { kind:'ceramic', title:'My Harmless Trojan', meta:'Hand-built ceramic, unfired', year:2026,
     frames:[{src:'images/My Harmless Trojan 1.jpg'},{src:'images/My Harmless Trojan 2.jpg'},{src:'images/My Harmless Trojan 3.jpg'},{src:'images/My Harmless Trojan 4.jpg'},{src:'images/My Harmless Trojan 5.jpg'}]},
+  { kind:'drawing', title:'Stained Bedsheet', meta:'Acrylic marker and brush pen on paper, 29.7 × 42.0 cm', year:2026, frames:[{src:'images/Stained Bedsheet 1.jpg'},{src:'images/Stained Bedsheet 2.jpg'},{src:'images/Stained Bedsheet 3.jpg'}]},
   { kind:'drawing', title:'Stained Cox', meta:'Acrylic marker and brush pen on paper, 29.7 × 42.0 cm', year:2026, frames:[{src:'images/Stained Cox.jpg'}]},
   { kind:'drawing', title:'Stained Range', meta:'Acrylic marker on paper, 26.0 × 37.5 cm', year:2026, frames:[{src:'images/Stained Range.jpg'}]},
   { kind:'drawing', title:'Stained Corrida', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Corrida.jpg'}]},
@@ -471,6 +472,8 @@
     { title: "Stained Anatomy Vol. 2", note: "The body pulled apart into lines and put back together as a stained glass window. Each crossing point became a cell, filled the way Range filled its peaks, the way Chime filled its figures. Anatomy asked what a body looks like underneath. This one asks what it looks like broken into pieces and reassembled by color instead of muscle." },
     { title: "Stained Pillow", note: "Someone completely gone, tangled up in the sheets, one leg thrown out, arm dropped wherever it landed. The title gives away more than the drawing does." },
     { title: "Stained Hold", note: "A free climber, no rope. Every hold has to be exact, because there is nothing behind you if you miss it. I think that kind of risk does not make people careless. It makes them slower, more deliberate, each movement checked before it is trusted." },
+    { title: "On Watch", note: "The body is relaxed, but the eyes stay alert. I kept the color to the edges of the body and left the rest of the paper white, so the brush lines of the stripes carry most of the drawing." },
+    { title: "Stained Bedsheet", note: "A kind robot wants to help her sleep without disturbance. Perhaps for a very long time. Would it miss?" },
     { title: "Dog Somm", note: "A dog in a green jacket and a pink polka-dot bow tie, swirling a glass with the same seriousness a sommelier brings to a good vintage. What's actually in the glass is not wine. To him, that's beside the point. What one creature savors, another turns its nose up at, and neither of them is wrong about it." },
     { title: "Rush Hour", note: "A turtle, moving at exactly the speed a turtle moves. I liked the idea of naming that pace after the one time of day when nobody else gets to move at their own speed." },
     { title: "Stained Sunday Noon", note: "A second and more relaxed version of Stained Sunday Afternoon, earlier in the day. The lamp is shaped like a wine glass now, the palette has shifted, and the whole scene has more room to stretch into. Everything else stays close to the original." },
@@ -536,7 +539,7 @@
   function WorksPage({ceramics, drawings, onAbout}) {
     // Stained series: works on paper
     const stainedFeature = ['Stained Pit Masters','Stained Centrifugal','Stained Jump','Stained Spotlight','Stained Night Climbers','A Stained Person on the Couch','Stained Break','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','Stained Relay','Stained Strings','Stained Person on the Throne','Stained Kiss','Stained Reach','Stained Anatomy Vol. 2','Stained Machine','Stained Entry'];
-    const stainedGridOrder = ['Stained Nap','Stained Cox','Stained Hold','Stained Pillow','Stained Drip','Stained Sunday Noon','Stained Boxers','Stained Parisienne','Stained Chime','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus','Stained Range','Stained Corrida','Stained Scoliosis'];
+    const stainedGridOrder = ['Stained Bedsheet','Stained Nap','Stained Cox','Stained Hold','Stained Pillow','Stained Drip','Stained Sunday Noon','Stained Boxers','Stained Parisienne','Stained Chime','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus','Stained Range','Stained Corrida','Stained Scoliosis'];
     const stainedAll = new Set([...stainedFeature, ...stainedGridOrder]);
 
     const stainedPlates = stainedFeature.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
