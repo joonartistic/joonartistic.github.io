@@ -416,10 +416,10 @@
       {src:'images/Stained Horse Riding 3.jpg'},
     ]},
     { title:'Stained King on the Singaporean Street', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Descendant.jpg'}]},
-    { title:'Stained Brink', meta:'Pen and brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'img/untitled-rowing-into-the-gorge.jpg'}]},
+    { title:'Stained Brink', meta:'Pen and brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Stained Brink.jpg'}]},
     { title:'The Weight of Heritage', meta:'Acrylic marker and brush pen on paper, 29.7 × 42.0 cm', year:2026, frames:[
-      {src:'img/the-weight-of-heritage.jpg'},
-      {src:'img/the-weight-of-heritage-2.jpg'},
+      {src:'images/The Weight of Heritage.jpg'},
+      {src:'images/The Weight of Heritage 2.jpg'},
     ]},
   ];
 
@@ -514,8 +514,8 @@
     { title: "Fishermen", note: "This artwork creatively captures fishermen resting or sharing everyday moments in a quiet Mediterranean village using unique geometric lines and planes. The light blue stripe patterns evoke the refreshing spirit of the Mediterranean Sea, while warm beige tones and fluid brown outlines harmonize to convey a peaceful and relaxed snapshot of a fisherman's life." },
     { title: "Pose", note: "Inspired by the striking and confident silhouette of a tree spotted at a botanical garden, this artwork captures nature posing like a model on a fashion week runway. Dynamic diagonal branches, a subtle yellow aura, and textured green foliage combine to highlight the stylish, elegant, and fashionable energy inherent in the natural world." },
     { title: "Bull Trap", note: "This artwork explores the dual concept of a 'Bull Trap', capturing both the physical moment a charging bull suddenly shifts direction and the financial term describing a false market rebound that leads to a decline. The dynamic angle of the bull, the dense hatching of brown pen lines, and the sharp white vertical gap across its torso visually emphasize a sudden pivot and unexpected shift in momentum." },
-    { title: "Stained Brink", note: "A rowing crew caught in the final moments before their boat tips over the edge of a waterfall. The scene is charged with the peculiar calm that precedes the inevitable — they have passed the point of no return, and yet nothing has broken yet. One rower wears purple, distinct from the rest.\n\nThe image sits with a broader thought: that in a world as interconnected as ours, what happens to one of us happens to all of us. The boat does not go over unless everyone goes over. We are all in the same boat." },
-    { title: "The Weight of Heritage", note: "A figure stands beneath a structure too large and too old to have been built by anyone alive — yet it must be carried. Heritage arrives before we are asked whether we want it: the monuments, the hierarchies, the accumulated weight of what came before. Some inherit privilege. Some inherit burden. Many inherit both, pressed together, indistinguishable.\n\nThe title is drawn from Delacroix; the graffiti reads Tout est à nous — everything belongs to us. Whether that is a cry of ownership or a joke about impossibility depends on who is reading it and what they are standing beneath." },
+    { title: "Stained Brink", note: "We live in a connected world. A crisis in one country can affect people in many others. Our economies depend on each other. We share energy resources, trade, and many global systems. Wars and conflicts also reach far beyond their borders. We may have different interests, but we face many of the same risks. We are all in the same boat." },
+    { title: "The Weight of Heritage", note: "We inherit wealth, power, and traditions from the past. These things can support us, but they can also hold us back. We often try to protect what previous generations have left behind. But who benefits from this protection? And what happens when the past takes up too much space in the present? What we inherit can become both a privilege and a burden." },
   ];
 
   function App() {
@@ -545,8 +545,8 @@
 
   function WorksPage({ceramics, drawings, onAbout}) {
     // Stained series: works on paper
-    const stainedFeature = ['Stained Pit Masters','Stained Centrifugal','Stained Jump','Stained Spotlight','Stained Night Climbers','A Stained Person on the Couch','Stained Break','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','The Weight of Heritage','Stained Strings','Stained Person on the Throne','Stained Kiss','Stained Reach','Stained Anatomy Vol. 2','Stained Machine','Stained Entry'];
-    const stainedGridOrder = ['Stained Brink','Stained Relay','Stained Bedsheet','Stained Nap','Stained Cox','Stained Hold','Stained Pillow','Stained Drip','Stained Sunday Noon','Stained Boxers','Stained Parisienne','Stained Chime','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus','Stained Range','Stained Corrida','Stained Scoliosis'];
+    const stainedFeature = ['Stained Pit Masters','Stained Centrifugal','Stained Jump','Stained Spotlight','Stained Night Climbers','A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','The Weight of Heritage','Stained Brink','Stained Strings','Stained Person on the Throne','Stained Reach','Stained Anatomy Vol. 2','Stained Machine','Stained Entry'];
+    const stainedGridOrder = ['Stained Relay','Stained Bedsheet','Stained Nap','Stained Cox','Stained Hold','Stained Pillow','Stained Drip','Stained Sunday Noon','Stained Boxers','Stained Break','Stained Kiss','Stained Parisienne','Stained Chime','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus','Stained Range','Stained Corrida','Stained Scoliosis'];
     const stainedAll = new Set([...stainedFeature, ...stainedGridOrder]);
 
     const stainedPlates = stainedFeature.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
