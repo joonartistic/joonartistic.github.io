@@ -620,7 +620,7 @@
     const singleCeramics = ceramics.filter(w => !randonneeAll.has(w.title));
     const singleDrawings = drawings.filter(w => !stainedAll.has(w.title));
     const singlesAll = [...singleCeramics, ...singleDrawings];
-    const singlesPinnedOrder = ['Under Review', 'Dog Somm', 'Lure (Sirens)', 'Oasis in a Wadi', 'Valley of Whales'];
+    const singlesPinnedOrder = ['On Watch', 'Under Review', 'Dog Somm', 'Lure (Sirens)', 'Oasis in a Wadi', 'Valley of Whales'];
     const singlesPinned = singlesPinnedOrder.map(t => singlesAll.find(w => w.title === t)).filter(Boolean);
     const singlesRest = singlesAll.filter(w => !singlesPinnedOrder.includes(w.title));
 
@@ -654,10 +654,6 @@
         <div className="draw-grid" style={{paddingTop: 80}}>
           {stainedGrid.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
-        <blockquote className="pullquote">
-          “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
-          <span className="att">Statement, 2026</span>
-        </blockquote>
         </>}
         {tab === 'randonnee' && <>
         <div className="room-head">
