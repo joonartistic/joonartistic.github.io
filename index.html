@@ -171,6 +171,17 @@
   .more-link { background: none; border: none; padding: 0; font: inherit; color: var(--ink); cursor: pointer;
     text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); white-space: nowrap; }
   .more-link:hover { color: var(--accent); }
+  .series-tabs { position: sticky; top: var(--nav-h, 66px); z-index: 40; background: var(--bg); border-bottom: 1px solid var(--rule); }
+  .series-tabs .inner { max-width: 1400px; margin: 0 auto; padding: 0 56px; display: flex; gap: 40px; overflow-x: auto; scrollbar-width: none; }
+  .series-tabs .inner::-webkit-scrollbar { display: none; }
+  .series-tabs button {
+    background: none; border: 0; cursor: pointer; font: inherit; white-space: nowrap;
+    padding: 18px 0 16px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid transparent; margin-bottom: -1px;
+  }
+  .series-tabs button:hover { color: var(--ink); }
+  .series-tabs button.on { color: var(--ink); border-color: var(--ink); }
+  body:not(.theme-light) .series-tabs button.on { color: var(--accent); border-color: var(--accent); }
   .singles-head { max-width: 1400px; margin: 140px auto 0; padding: 0 56px 28px; border-bottom: 1px solid var(--rule); }
   .singles-head h3 { font-family: var(--serif); font-style: italic; font-size: 26px; font-weight: 400; margin: 0 0 8px; }
   .singles-head p { font-size: 13px; color: var(--muted); margin: 0; }
@@ -222,6 +233,8 @@
     .colophon { grid-template-columns: 1fr 1fr; padding: 56px 24px; gap: 28px; }
     .about { padding: 100px 24px 120px; }
     .pullquote { padding: 0 24px; margin: 80px auto 56px; }
+    .series-tabs .inner { padding: 0 24px; gap: 20px; }
+    .series-tabs button { letter-spacing: 0.14em; font-size: 11px; }
   }
 </style>
 </head>
@@ -240,7 +253,7 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
 <script type="text/babel" data-presets="react">
-  const { useState, useEffect } = React;
+  const { useState, useEffect, useRef } = React;
 
   const WORKS = [
     { kind:'ceramic', title:'After she left my bed', meta:'Hand-built ceramic', year:2026,
@@ -352,6 +365,7 @@
     { kind:'drawing', title:'Pose', meta:'Pen drawing, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/20260602_142844.jpg'}]},
     { kind:'drawing', title:'Bull Trap', meta:'Pen drawing, 9.5 × 13.0 cm', year:2026, frames:[{src:'images/bull trap.jpg'}]},
   { kind:'drawing', title:'Bull', meta:'Acrylic marker and pen on paper, 9.5 × 13.0 cm', year:2026, frames:[{src:'images/Bull 1.jpg'},{src:'images/Bull 2.jpg'}]},
+  { kind:'drawing', title:'Under Review', meta:'Pen and acrylic marker on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Under Review.jpg'}]},
   { kind:'drawing', title:'Rush Hour', meta:'Acrylic marker on paper, 9.5 × 13.0 cm', year:2026, frames:[{src:'images/Rush hour.jpg'}]},
   ];
 
@@ -417,6 +431,15 @@
     ]},
     { title:'Stained King on the Singaporean Street', meta:'Acrylic marker on paper, 17.3 × 24.5 cm', year:2026, frames:[{src:'images/Stained Descendant.jpg'}]},
     { title:'Stained Brink', meta:'Pen and brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Stained Brink.jpg'}]},
+    { title:'Chasing Its Own Tail', meta:'Calligraphy ink on canvas, 20 × 30 cm', year:2026, frames:[{src:'images/Chasing Its Own Tail.jpg'}]},
+    { title:'Knot', meta:'Ink on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Knot.jpg'}]},
+    { title:'Nest', meta:'Ink and brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Nest.jpg'}]},
+    { title:'Switchback', meta:'Ink and brush pen on paper, 29.7 × 42.0 cm', year:2026, frames:[{src:'images/Switchback.jpg'}]},
+    { title:'Rustle', meta:'Brush pen and acrylic marker on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Rustle.jpg'}]},
+    { title:'Unarmed', meta:'Brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Unarmed.jpg'}]},
+    { title:'Seasoned', meta:'Brush pen on paper, 21.0 × 29.7 cm', year:2026, frames:[{src:'images/Seasoned.jpg'}]},
+    { title:'Breakout', meta:'Calligraphy ink and acrylic marker on paper, 29.7 × 42.0 cm', year:2026, frames:[{src:'images/Breakout.jpg'}]},
+    { title:'Stained Shootout', meta:'Pen, brush pen, and acrylic marker on paper, 29.7 × 42.0 cm', year:2026, frames:[{src:'images/Stained Shootout.jpg'}]},
     { title:'The Weight of Heritage', meta:'Acrylic marker and brush pen on paper, 29.7 × 42.0 cm', year:2026, frames:[
       {src:'images/The Weight of Heritage.jpg'},
       {src:'images/The Weight of Heritage 2.jpg'},
@@ -514,6 +537,8 @@
     { title: "Fishermen", note: "This artwork creatively captures fishermen resting or sharing everyday moments in a quiet Mediterranean village using unique geometric lines and planes. The light blue stripe patterns evoke the refreshing spirit of the Mediterranean Sea, while warm beige tones and fluid brown outlines harmonize to convey a peaceful and relaxed snapshot of a fisherman's life." },
     { title: "Pose", note: "Inspired by the striking and confident silhouette of a tree spotted at a botanical garden, this artwork captures nature posing like a model on a fashion week runway. Dynamic diagonal branches, a subtle yellow aura, and textured green foliage combine to highlight the stylish, elegant, and fashionable energy inherent in the natural world." },
     { title: "Bull Trap", note: "This artwork explores the dual concept of a 'Bull Trap', capturing both the physical moment a charging bull suddenly shifts direction and the financial term describing a false market rebound that leads to a decline. The dynamic angle of the bull, the dense hatching of brown pen lines, and the sharp white vertical gap across its torso visually emphasize a sudden pivot and unexpected shift in momentum." },
+    { title: "Under Review", note: "The referee walks over to check his own call. Everyone is watching, and a single decision could change the fate of the match. The pressure must be immense." },
+    { title: "Stained Shootout", note: "A cowboy duel with cameras instead of guns, and a zebra instead of a horse. The drawing plays on the two meanings of \"shoot.\"" },
     { title: "Stained Brink", note: "We live in a connected world. A crisis in one country can affect people in many others. Our economies depend on shared energy resources, trade, and global systems. War and conflict also extend far beyond national borders. We may have different interests, but we are all in the same boat." },
     { title: "The Weight of Heritage", note: "We inherit wealth, power, and traditions from the past. These things can support us, but they can also hold us back. We often try to protect what previous generations have left behind. But who benefits from this protection? And what happens when the past takes up too much space in the present? What we inherit can become both a privilege and a burden." },
   ];
@@ -545,7 +570,7 @@
 
   function WorksPage({ceramics, drawings, onAbout}) {
     // Stained series: works on paper
-    const stainedFeature = ['Stained Pit Masters','Stained Centrifugal','Stained Jump','Stained Spotlight','Stained Night Climbers','A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','The Weight of Heritage','Stained Brink','Stained Strings','Stained Person on the Throne','Stained Reach','Stained Anatomy Vol. 2','Stained Machine','Stained Entry'];
+    const stainedFeature = ['Stained Pit Masters','Stained Centrifugal','Stained Jump','Stained Spotlight','Stained Night Climbers','A Stained Person on the Couch','Stained Sunday Afternoon','Stained Pour','Stained Pipe Smoker','Stained Shootout','The Weight of Heritage','Stained Brink','Stained Strings','Stained Person on the Throne','Stained Reach','Stained Anatomy Vol. 2','Stained Machine','Stained Entry'];
     const stainedGridOrder = ['Stained Relay','Stained Bedsheet','Stained Nap','Stained Cox','Stained Hold','Stained Pillow','Stained Drip','Stained Sunday Noon','Stained Boxers','Stained Break','Stained Kiss','Stained Parisienne','Stained Chime','Stained Anatomy','Stained King on the Singaporean Street','Stained Pickleball (Where is the ball?)','Stained Draw','Stained Turn','Stained Work','Stained Workout','Wake','Stained Point Taken','Stained Prometheus','Stained Range','Stained Corrida','Stained Scoliosis'];
     const stainedAll = new Set([...stainedFeature, ...stainedGridOrder]);
 
@@ -562,11 +587,40 @@
     const randonneePlates = randonneeFeature.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
     const randonneeGrid = randonneeGridOrder.map(t => ceramics.find(w => w.title === t)).filter(Boolean);
 
+    // Gyeol series: large-brush works
+    const gyeolFeature = ['Chasing Its Own Tail','Knot','Nest','Switchback'];
+    const gyeolGridOrder = ['Rustle','Unarmed','Seasoned','Breakout'];
+    const gyeolPlates = gyeolFeature.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
+    const gyeolGrid = gyeolGridOrder.map(t => LARGE_DRAWINGS.find(w => w.title === t)).filter(Boolean);
+
+    // Series tabs (each series also has its own link, e.g. #gyeol)
+    const TABS = [['stained','Stained'],['randonnee','Randonnée'],['gyeol','Gyeol'],['singles','Singles']];
+    const readTab = () => { const h = (window.location.hash || '').slice(1).toLowerCase(); return TABS.some(t => t[0] === h) ? h : 'stained'; };
+    const [tab, setTab] = useState(readTab);
+    const tabsAnchor = useRef(null);
+    useEffect(() => {
+      const setNavH = () => { const n = document.querySelector('nav.top'); if (n) document.documentElement.style.setProperty('--nav-h', n.offsetHeight + 'px'); };
+      const onHash = () => setTab(readTab());
+      setNavH();
+      window.addEventListener('resize', setNavH);
+      window.addEventListener('hashchange', onHash);
+      return () => { window.removeEventListener('resize', setNavH); window.removeEventListener('hashchange', onHash); };
+    }, []);
+    const goTab = (id) => {
+      if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#' + id);
+      setTab(id);
+      const a = tabsAnchor.current, n = document.querySelector('nav.top');
+      if (a) {
+        const top = a.getBoundingClientRect().top + window.scrollY - (n ? n.offsetHeight : 0);
+        if (window.scrollY > top) window.scrollTo({ top, behavior: 'auto' });
+      }
+    };
+
     // Singles: everything else
     const singleCeramics = ceramics.filter(w => !randonneeAll.has(w.title));
     const singleDrawings = drawings.filter(w => !stainedAll.has(w.title));
     const singlesAll = [...singleCeramics, ...singleDrawings];
-    const singlesPinnedOrder = ['Dog Somm', 'Lure (Sirens)', 'Oasis in a Wadi', 'Valley of Whales'];
+    const singlesPinnedOrder = ['Under Review', 'Dog Somm', 'Lure (Sirens)', 'Oasis in a Wadi', 'Valley of Whales'];
     const singlesPinned = singlesPinnedOrder.map(t => singlesAll.find(w => w.title === t)).filter(Boolean);
     const singlesRest = singlesAll.filter(w => !singlesPinnedOrder.includes(w.title));
 
@@ -579,6 +633,15 @@
           </h1>
 
         </header>
+        <div ref={tabsAnchor} />
+        <div className="series-tabs">
+          <div className="inner">
+            {TABS.map(([id, label]) => (
+              <button key={id} className={tab === id ? 'on' : ''} onClick={() => goTab(id)}>{label}</button>
+            ))}
+          </div>
+        </div>
+        {tab === 'stained' && <>
         <div className="room-head">
           <div className="roman">Room <b>I</b></div>
           <div>
@@ -595,6 +658,8 @@
           “The hand-built form becomes the outline of an experience, and the brushwork follows the way memory surfaces.”
           <span className="att">Statement, 2026</span>
         </blockquote>
+        </>}
+        {tab === 'randonnee' && <>
         <div className="room-head">
           <div className="roman">Room <b>II</b></div>
           <div>
@@ -607,14 +672,31 @@
         <div className="draw-grid" style={{paddingTop: 80}}>
           {randonneeGrid.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
+        </>}
+        {tab === 'gyeol' && <>
+        <div className="room-head">
+          <div className="roman">Room <b>III</b></div>
+          <div>
+            <h2>Gyeol</h2>
+            <p>In Korean, <em>gyeol</em> (결) is the grain left in wood, water or breath. Drawn with a large brush, every stroke is a path that breaks and continues.</p>
+          </div>
+        </div>
+        <div className="rule" />
+        {gyeolPlates.map((w) => <Plate key={w.title} work={w} size="feature" />)}
+        <div className="draw-grid" style={{paddingTop: 80}}>
+          {gyeolGrid.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
+        </div>
+        </>}
+        {tab === 'singles' && <>
         <div className="singles-head">
           <h3>Singles</h3>
-          <p>Work outside the two series.</p>
+          <p>Work outside the three series.</p>
         </div>
         <div className="draw-grid">
           {singlesPinned.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
           {singlesRest.map((w, i) => <DrawItem key={w.title} work={w} acc={String(i+1).padStart(2,'0')} />)}
         </div>
+        </>}
         <footer className="colophon">
           <div><h4>Virtual Studio</h4>Singapore / Seoul<br/>By appointment</div>
           <div><h4>Contact</h4><a href="https://instagram.com/joonartistic" target="_blank" rel="noreferrer">@joonartistic</a></div>
